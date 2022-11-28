@@ -10,7 +10,7 @@ function App() {
             <div>
                 <button
                     onClick={() => {
-                        axios.get("http://127.0.0.1:8000/articles/review/1").then((res) => {
+                        axios.get("http://127.0.0.1:8000/articles/review/1/").then((res) => {
                             console.log(res.data);
                         });
                     }}
