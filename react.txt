@@ -1,0 +1,4 @@
+터미널에 npm install
+npm install http-proxy-middleware --save
+npm add axios
+npm run build
