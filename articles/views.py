@@ -17,7 +17,7 @@ class ReviewList(APIView): # 목록 보여줌
         serializer = ReviewSerializer(
             data=request.data) # request.data는 사용자 입력 데이터
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user = self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
