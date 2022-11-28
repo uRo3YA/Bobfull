@@ -55,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
 CORS_ALLOW_CREDENTIALS = True
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'bobfull.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'build'),],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'build'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
