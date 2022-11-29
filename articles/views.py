@@ -2,11 +2,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import Http404
-
-from .serializers import ReviewSerializer
-from .models import Review
+from accounts.serializers import UserSerializer
+from .serializers import ReviewSerializer,Matching_roomSerializer
+from .models import Review,Matching_room
 from rest_framework import viewsets
-
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
+from rest_framework.generics import get_object_or_404
 # class ReviewList(APIView): # 목록 보여줌
 #     def get(self, request): # 리스트 보여줄 때
 #         reviews = Review.objects.all()
@@ -53,3 +54,37 @@ class ReviewViewSet(viewsets.ModelViewSet):
        	# serializer.save() 재정의
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
+
+class matching_roomViewSet(viewsets.ModelViewSet):
+    queryset = Matching_room.objects.all()
+    serializer_class = Matching_roomSerializer
+       	# serializer.save() 재정의
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user)
+
+# class MembertViewSet(viewsets.ModelViewSet):
+
+#     queryset = Member.objects.all()
+#     serializer_class = MemberSerializer
+#     # print(serializer_class)
+#     def perform_create(self, serializer):
+#         serializer.save(user = self.request.user)
+#         print(serializer)
+
+    
+    # Matching_room.objects.get(serializer.)
+    # def perform_update(self, serializer):
+    #     if  [] in  
+class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
+    def post(self, request,pk):
+        # user가 2가지 있어서 혼동 방지를 위해 
+        room = get_object_or_404(Matching_room, id=pk)
+        me = request.user
+        # print(you.followings.all())
+        if me in room.member.all(): # users/models.py의 related_name=followers
+            room.followings.remove(me) # (request.user)
+            return Response("매칭을 취소했습니다.", status=status.HTTP_200_OK)
+        else:
+            room.member.add(me) # 너의 팔로워에 나를 더해라
+            return Response("매칭을 참가했습니다.", status=status.HTTP_200_OK)
+
