@@ -44,7 +44,7 @@ class AuthAPIView(APIView):
     def get(self, request):
         try:
             # access token을 decode 해서 유저 id 추출 => 유저 식별
-            access = request.COOKIES['access']
+            access =  request.COOKIES.get('access')
             payload = jwt.decode(access, SECRET_KEY, algorithms=['HS256'])
             pk = payload.get('user_id')
             user = get_object_or_404(User, pk=pk)
