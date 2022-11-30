@@ -51,5 +51,5 @@ class person_review(models.Model):
     ## 작성자
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
     ## 평가요소
-    evaluation=models.TextField(choices=eval_Choices)
+    evaluation=models.CharField(max_length=80,choices=eval_Choices)
     ## 

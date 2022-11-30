@@ -33,7 +33,7 @@ class Matching_roomSerializer(serializers.ModelSerializer):
 class person_reviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = person_review
-        fields=('id', 'matching_room','user','evaluation')
+        fields=('id', 'matching_room','user','evaluation' )
 # class MemberSerializer(serializers.ModelSerializer):
 #     user = serializers.ReadOnlyField(source = 'user.nickname')
 #     class Meta:
