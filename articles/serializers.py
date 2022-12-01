@@ -1,10 +1,6 @@
 from rest_framework import serializers
 from .models import Review,Matching_room,person_review
-from accounts.serializers import UserSerializer
 from accounts.models import User
-
-
-
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source = 'user.nickname')

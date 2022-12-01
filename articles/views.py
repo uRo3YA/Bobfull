@@ -2,7 +2,6 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import Http404
-from accounts.serializers import UserSerializer
 from .serializers import ReviewSerializer,Matching_roomSerializer,person_reviewSerializer
 from .models import Review,Matching_room,person_review
 from rest_framework import viewsets
