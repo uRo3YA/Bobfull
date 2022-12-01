@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models import User
 from django.conf import settings
+from restaurant.models import Restaurant
+
 star_Choices = (
     ("⭐", "⭐"),
     ("⭐⭐", "⭐⭐"),
@@ -24,16 +26,9 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     grade= models.CharField(max_length=10, choices=star_Choices)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     ## 필요한 것들
     # 레스토랑 정보
-    # 같이 간 사람 수?
-    # 댓글도 필요한가?
-# class Matching_room(models.Model):
-#     title = models.CharField(max_length=50)
-#     from_date = models.DateTimeField()
-#     to_date = models.DateTimeField()
-#     content = models.TextField()
-#     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name= 'member')
 
 class Matching_room(models.Model):
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
@@ -43,6 +38,7 @@ class Matching_room(models.Model):
     content = models.TextField()
     # members = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='members')
     member = models.ManyToManyField(User, symmetrical=False, related_name='members')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
 ## 같이 간 사람의 평가
 class person_review(models.Model):
