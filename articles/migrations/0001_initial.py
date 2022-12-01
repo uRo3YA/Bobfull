@@ -42,6 +42,7 @@ class Migration(migrations.Migration):
             name='person_review',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+
                 ('evaluation', models.CharField(choices=[('매너가 좋았어요.', '매너가 좋았어요.'), ('제 시간에 맞춰 왔어요.', '제 시간에 맞춰 왔어요.'), ('여기는 뭐 추가?', '여기는 뭐 추가?'), ('아이디어 없음', '아이디어 없음')], max_length=80)),
                 ('matching_room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='articles.matching_room')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
