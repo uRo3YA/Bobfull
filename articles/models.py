@@ -38,7 +38,7 @@ class Matching_room(models.Model):
     content = models.TextField()
     # members = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='members')
     member = models.ManyToManyField(User, symmetrical=False, related_name='members')
-    restaurant = models.ForeignKey(Restaurant, null=False, blank=False, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
 ## 같이 간 사람의 평가
 class person_review(models.Model):
