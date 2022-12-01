@@ -19,6 +19,11 @@ class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        print(context["request"])
+        return context
 
     def perform_create(self, serializer):
         store = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
@@ -40,8 +45,8 @@ class matching_roomViewSet(viewsets.ModelViewSet):
        	
 
     def perform_create(self, serializer):
-        
-        serializer.save(user=self.request.user)
+        store = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        serializer.save(user=self.request.user,restaurant=store)
         
         # return super().perform_create(serializer)
 
