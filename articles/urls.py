@@ -45,8 +45,8 @@ matching_room_reviewdetail = person_reviewViewSet.as_view({
 urlpatterns = [
     # path('review/', ReviewList.as_view()),
     # path('review/<int:pk>/', ReviewDetail.as_view()),
-    path('review/', review_list),
-    path('review/<int:pk>/', review_detail),
+    path('review/<int:restaurant_id>/', review_list),
+    path('review/<int:restaurant_id>/<int:pk>/', review_detail),
     path('matching_room/', matching_room_list),
     path('matching_room/<int:pk>/', matching_room_detail),
     # path('member/', member_list),
