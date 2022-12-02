@@ -1,24 +1,33 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
 from rest_framework import serializers
-from dj_rest_auth.registration.serializers import RegisterSerialize
+from dj_rest_auth.serializers import UserDetailsSerializer
+from .models import *
 
-class CustomRegisterSerializer(RegisterSerializer):
-    # 기본 설정 필드: username, password, email
-    # 추가 설정 필드: alcohol, talk, smoke, speed, gender, manner
-    alcohol = serializers.BooleanField()    
-    talk = serializers.BooleanField()    
-    smoke = serializers.BooleanField()    
-    speed = serializers.IntegerField()   
-    gender = serializers.BooleanField() # False가 남자    
-    manner = serializers.FloatField(default=36.5)
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
 
-    def get_cleaned_data(self):
-        data = super().get_cleaned_data()
-        data['alcohol'] = self.validated_data.get('alcohol', '')
-        data['talk'] = self.validated_data.get('talk', '')
-        data['smoke'] = self.validated_data.get('smoke', '')
-        data['speed'] = self.validated_data.get('speed', '')
-        data['gender'] = self.validated_data.get('gender', '')
-        data['manner'] = self.validated_data.get('manner', '')
-        return data
+class UserSerializer(UserDetailsSerializer):
 
+    profile = ProfileSerializer()
+
+    class Meta(UserDetailsSerializer.Meta):
+        fields = UserDetailsSerializer.Meta.fields + ('profile',)
+
+    def update(self, instance, validated_data):
+        profile_serializer = self.fields['profile']
+        profile_instance = instance.userprofile
+        profile_data = validated_data.pop('profile', {})
+
+        # to access the 'company_name' field in here
+        alcohol = profile_data.get('alcohol')
+        talk = profile_data.get('talk')
+        smoke = profile_data.get('smoke')
+        speed = profile_data.get('speed')
+        gender = profile_data.get('gender')
+
+        # update the userprofile fields
+        profile_serializer.update(profile_instance, profile_data)
+
+        instance = super().update(instance, validated_data)
+        return instance
