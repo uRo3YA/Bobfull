@@ -45,17 +45,17 @@ matching_room_reviewdetail = person_reviewViewSet.as_view({
 urlpatterns = [
     # path('review/', ReviewList.as_view()),
     # path('review/<int:pk>/', ReviewDetail.as_view()),
-    path('<int:restaurant_id>/review/', review_list),
-    path('<int:restaurant_id>/review/<int:pk>/', review_detail),
-    path('<int:restaurant_id>/matching_room/', matching_room_list),
-    path('<int:restaurant_id>/matching_room/<int:pk>/', matching_room_detail),
+    path('review/', review_list),
+    path('review/<int:pk>/', review_detail),
+    path('matching_room/', matching_room_list),
+    path('matching_room/<int:pk>/', matching_room_detail),
     # path('member/', member_list),
     # path('member/<int:pk>/', member_detail),
     # path('member/<int:pk>/add/', views.PostLikeAPIView.as_view(), name='post_like'),
-    path('<int:restaurant_id>/matching_room/<int:pk>/add/', views.add_memberView.as_view(), name="add_member"), # 멤버추가
+    path('matching_room/<int:pk>/add/', views.add_memberView.as_view(), name="add_member"), # 멤버추가
     # path('matching_room/<int:pk>/review/add/',views.person_reviewView.as_view(), name="add_personreview")# 사람 후기
-    path('<int:restaurant_id>/matching_room/<int:pk>/review/add/',matching_room_reviewlist),
-    path('<int:restaurant_id>/matching_room/<int:pk>/review/<int:review_id>/',matching_room_reviewdetail)
+    path('matching_room/<int:pk>/review/add/',matching_room_reviewlist),
+    path('matching_room/<int:pk>/review/<int:review_id>/',matching_room_reviewdetail)
     ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
