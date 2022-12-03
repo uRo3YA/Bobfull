@@ -2,49 +2,64 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import Http404
+
 from .serializers import ReviewSerializer,Matching_roomSerializer,person_reviewSerializer
 from .models import Review,Matching_room,person_review
 from rest_framework import viewsets
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.generics import get_object_or_404
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from django.db.models import Q
 
-
-
+from restaurant.models import Restaurant
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication, SessionAuthentication]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-   
-       	# serializer.save() 재정의
-    # def perform_create(self, serializer):
-    #     print(self.request)
-    #     serializer.save(user = self.request.user)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        print(context["request"])
+        return context
+
     def perform_create(self, serializer):
-        # post = form.save(commit=False)
-        # post.author = self.request.user
-        # post.save()
-        serializer.save(user=self.request.user)
+        store = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        serializer.save(user=self.request.user,restaurant=store)
+        
         return super().perform_create(serializer)
+    def get_queryset(self):
+        qs = super().get_queryset()
+        room = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        qs = qs.filter(restaurant=self.kwargs['restaurant_id'])
+       
+        return qs
+        # return super().perform_create(serializer)
 
 class matching_roomViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication, SessionAuthentication]
     queryset = Matching_room.objects.all()
     serializer_class = Matching_roomSerializer
-       	# serializer.save() 재정의
+       	
 
     def perform_create(self, serializer):
-        m=[]
-        serializer.save(user=self.request.user)
-        serializer.save(meber=m.append(self.request.user))
-        return super().perform_create(serializer)
-
+        member=[self.request.user]
+        store = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        serializer.save(user=self.request.user,restaurant=store,member=member)
+        
+        # return super().perform_create(serializer)
+    def get_queryset(self):
+        qs = super().get_queryset()
+        room = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        qs = qs.filter(restaurant=self.kwargs['restaurant_id'])
+       
+        return qs
 
 class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
     authentication_classes = [BasicAuthentication, SessionAuthentication]
-    def post(self, request,pk):
+    def post(self, request,restaurant_id,pk):
          
         room = get_object_or_404(Matching_room, id=pk)
         me = request.user

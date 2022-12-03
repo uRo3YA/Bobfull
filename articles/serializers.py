@@ -20,11 +20,14 @@ class ReviewSerializer(serializers.ModelSerializer):
 #         model = Matching_room
 
 class Matching_roomSerializer(serializers.ModelSerializer):
-    # member = UserSerializer(many=True)
-
+    member = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all())
+    user = serializers.ReadOnlyField(source = 'user.id')
+    # member = serializers.ReadOnlyField(source = 'user.email')
+    restaurant = serializers.ReadOnlyField(source = 'restaurant.name')
     class Meta:
         model = Matching_room
-        fields = ('id','title', 'from_date','to_date','content','member')
+        fields = ('id','user','title', 'from_date','to_date','content','member','restaurant')
 
 class person_reviewSerializer(serializers.ModelSerializer):
     class Meta:
