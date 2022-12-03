@@ -58,8 +58,6 @@ INSTALLED_APPS = [
     'accounts',
     'restaurant',
 ]
-# 해당 어댑터가 유저 정보를 저장하는 어댑터를 알림
-ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
 
 # REST 관련 설정
 # dj-rest-auth 설정
@@ -67,18 +65,23 @@ REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserSerializer'
-}
 
 # django-allauth 설정
 SITE_ID = 1
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None # username 필드 사용 x
+ACCOUNT_USERNAME_REQUIRED = False # username 필드 사용 x
+ACCOUNT_EMAIL_REQUIRED = True # email 필드 사용 o
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "accounts.serializers.CustomUserRegisterSerializer"
+}  # 유저 회원가입
+
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "accounts.serializers.CustomUserDetailsSerializer",
+}  # 유저 디테일 시리얼라이져
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
