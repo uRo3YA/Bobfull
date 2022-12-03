@@ -3,6 +3,16 @@
         "model": "restaurant.restaurant",
         "pk": 1,
         "fields": {
+            "name": "다이호시",
+            "address": "경기 성남시 분당구 판교역로10번길 6 1층 (우)13536",
+            "category": 15,
+            "detail": "카이센동, 다이호시 카이센동, 사시미 (1인), 마구로동, 사케동, 사케이꾸라동, 마구로 우니동, 우니동, 우니이꾸라동"
+        }
+    },
+    {
+        "model": "restaurant.restaurant",
+        "pk": 2,
+        "fields": {
             "name": "우설화 판교점",
             "address": "경기 성남시 분당구 판교로 185 신화푸드빌리지 3층 (우)13473",
             "category": 15,
@@ -11,7 +21,7 @@
     },
     {
         "model": "restaurant.restaurant",
-        "pk": 2,
+        "pk": 3,
         "fields": {
             "name": "긴자 판교점",
             "address": "경기 성남시 분당구 판교로 185 신화푸드빌리지 3층 301호 (우)13473",
@@ -21,22 +31,12 @@
     },
     {
         "model": "restaurant.restaurant",
-        "pk": 3,
-        "fields": {
-            "name": "이가네양꼬치 판교본점",
-            "address": "경기 성남시 분당구 분당내곡로 155 KCC웰츠타워 104호 (우)13524",
-            "category": 15,
-            "detail": "탕수육, 가지요리, 양왕갈비 (250g), 양등심꼬치 (220g), 양왕꼬치 (1인분)"
-        }
-    },
-    {
-        "model": "restaurant.restaurant",
         "pk": 4,
         "fields": {
-            "name": "파파라구 (휴업중)",
-            "address": "경기 성남시 분당구 판교역로10번길 22-3 1층 (우)13536",
+            "name": "돈블랑 판교역점",
+            "address": "경기 성남시 분당구 대왕판교로606번길 10 알파리움 1단지 119호 (우)13530",
             "category": 15,
-            "detail": "라구 라자냐, 라구 파스타, 써니피자, 마르게리타피자, 5cheese 피자, 셰프스페셜파스타(아마트리치아나)"
+            "detail": "아랫고기 (150g), 웟고기 (150g), 가브리살 (150g), 항정살 (150g), 갈빗살 (130g)"
         }
     },
     {
@@ -63,45 +63,15 @@
         "model": "restaurant.restaurant",
         "pk": 7,
         "fields": {
-            "name": "오픈커피",
-            "address": "경기 성남시 분당구 판교역로14번길 15 성음아트센터 1층 105~107호 (우)13536",
+            "name": "이가네양꼬치 판교본점",
+            "address": "경기 성남시 분당구 분당내곡로 155 KCC웰츠타워 104호 (우)13524",
             "category": 15,
-            "detail": "아메리카노(HOT), 카페라떼(HOT), 바닐라라떼(HOT), 딸기에이드, 루이보스티(HOT)"
+            "detail": "탕수육, 가지요리, 양왕갈비 (250g), 양등심꼬치 (220g), 양왕꼬치 (1인분)"
         }
     },
     {
         "model": "restaurant.restaurant",
         "pk": 8,
-        "fields": {
-            "name": "테라로사 판교점",
-            "address": "경기 성남시 분당구 판교공원로2길 22 1층 (우)13477",
-            "category": 15,
-            "detail": "아메리카노(HOT), 카페라떼, 카푸치노, 민트레모네이드, 허니레몬티"
-        }
-    },
-    {
-        "model": "restaurant.restaurant",
-        "pk": 9,
-        "fields": {
-            "name": "방아깐",
-            "address": "경기 성남시 분당구 판교공원로1길 55 (우)13477",
-            "category": 15,
-            "detail": "광어 (1kg), 개불, 조개탕, 얼큰번데기, 계란찜"
-        }
-    },
-    {
-        "model": "restaurant.restaurant",
-        "pk": 10,
-        "fields": {
-            "name": "크래버 대게나라 판교점",
-            "address": "경기 성남시 분당구 판교역로 178 서건빌딩 13층 (우)13524",
-            "category": 15,
-            "detail": "대게코스(특A)(kg), 킹크랩코스(특A)(1kg), 랍스타코스(특A)(1kg), 대게정식, 킹크랩정식, 랍스타정식"
-        }
-    },
-    {
-        "model": "restaurant.restaurant",
-        "pk": 11,
         "fields": {
             "name": "삿뽀로 판교점",
             "address": "경기 성남시 분당구 대왕판교로606번길 58 판교푸르지오월드마크 2033호 (우)13525",
@@ -111,7 +81,7 @@
     },
     {
         "model": "restaurant.restaurant",
-        "pk": 12,
+        "pk": 9,
         "fields": {
             "name": "수하담",
             "address": "경기 성남시 분당구 판교로 190-8 1.,2층 (우)13474",
@@ -121,22 +91,52 @@
     },
     {
         "model": "restaurant.restaurant",
+        "pk": 10,
+        "fields": {
+            "name": "파파라구 (휴업중)",
+            "address": "경기 성남시 분당구 판교역로10번길 22-3 1층 (우)13536",
+            "category": 15,
+            "detail": "라구 라자냐, 라구 파스타, 써니피자, 마르게리타피자, 5cheese 피자, 셰프스페셜파스타(아마트리치아나)"
+        }
+    },
+    {
+        "model": "restaurant.restaurant",
+        "pk": 11,
+        "fields": {
+            "name": "테라로사 판교점",
+            "address": "경기 성남시 분당구 판교공원로2길 22 1층 (우)13477",
+            "category": 15,
+            "detail": "아메리카노(HOT), 카페라떼, 카푸치노, 민트레모네이드, 허니레몬티"
+        }
+    },
+    {
+        "model": "restaurant.restaurant",
+        "pk": 12,
+        "fields": {
+            "name": "방아깐",
+            "address": "경기 성남시 분당구 판교공원로1길 55 (우)13477",
+            "category": 15,
+            "detail": "광어 (1kg), 개불, 조개탕, 얼큰번데기, 계란찜"
+        }
+    },
+    {
+        "model": "restaurant.restaurant",
         "pk": 13,
         "fields": {
-            "name": "돈블랑 판교역점",
-            "address": "경기 성남시 분당구 대왕판교로606번길 10 알파리움 1단지 119호 (우)13530",
+            "name": "오픈커피",
+            "address": "경기 성남시 분당구 판교역로14번길 15 성음아트센터 1층 105~107호 (우)13536",
             "category": 15,
-            "detail": "아랫고기 (150g), 웟고기 (150g), 가브리살 (150g), 항정살 (150g), 갈빗살 (130g)"
+            "detail": "아메리카노(HOT), 카페라떼(HOT), 바닐라라떼(HOT), 딸기에이드, 루이보스티(HOT)"
         }
     },
     {
         "model": "restaurant.restaurant",
         "pk": 14,
         "fields": {
-            "name": "다이호시",
-            "address": "경기 성남시 분당구 판교역로10번길 6 1층 (우)13536",
+            "name": "크래버 대게나라 판교점",
+            "address": "경기 성남시 분당구 판교역로 178 서건빌딩 13층 (우)13524",
             "category": 15,
-            "detail": "카이센동, 다이호시 카이센동, 사시미 (1인), 마구로동, 사케동, 사케이꾸라동, 마구로 우니동, 우니동, 우니이꾸라동"
+            "detail": "대게코스(특A)(kg), 킹크랩코스(특A)(1kg), 랍스타코스(특A)(1kg), 대게정식, 킹크랩정식, 랍스타정식"
         }
     },
     {
