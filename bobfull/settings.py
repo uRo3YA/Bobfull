@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'rest_framework_simplejwt.token_blacklist',
 
     # Apps
     'articles',
@@ -59,21 +60,39 @@ INSTALLED_APPS = [
     'restaurant',
 ]
 
+# permission 설정
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ),
+}
+
 # REST 관련 설정
 # dj-rest-auth 설정
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 
-
 # django-allauth 설정
 SITE_ID = 1
-ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None # username 필드 사용 x
-ACCOUNT_USERNAME_REQUIRED = False # username 필드 사용 x
 ACCOUNT_EMAIL_REQUIRED = True # email 필드 사용 o
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False # username 필드 사용 x
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "accounts.serializers.CustomUserRegisterSerializer"
@@ -154,15 +173,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
