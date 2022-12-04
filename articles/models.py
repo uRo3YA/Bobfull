@@ -20,22 +20,31 @@ eval_Choices=(
 
 ## 식당 후기를 작성
 class Review(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     content = models.TextField()
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     grade= models.CharField(max_length=10, choices=star_Choices)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    ## 필요한 것들
-    # 레스토랑 정보
-    # 같이 간 사람 수?
-    # 댓글도 필요한가?
-# class Matching_room(models.Model):
-#     title = models.CharField(max_length=50)
-#     from_date = models.DateTimeField()
-#     to_date = models.DateTimeField()
-#     content = models.TextField()
-#     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name= 'member')
+    def __int__(self):
+        return self.id
+
+    class Meta:
+        db_table = 'review'
+# # 이미지 업로드 경로
+def image_upload_path(instance, filename):
+    return f'review/{instance.review.id}/{filename}'
+
+class Reviewimages(models.Model):
+    id = models.AutoField(primary_key=True)
+    review=models.ForeignKey(Review, on_delete=models.CASCADE, related_name='reviewimage')
+    image = models.ImageField(null=True, blank=True,upload_to=image_upload_path)
+    def __int__(self):
+        return self.id
+
+    class Meta:
+        db_table = 'review_image'
 
 class Matching_room(models.Model):
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)

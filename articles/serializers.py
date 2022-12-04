@@ -1,23 +1,36 @@
 from rest_framework import serializers
-from .models import Review,Matching_room,person_review
+from .models import Review,Matching_room,person_review,Reviewimages
 from accounts.models import User
 
+class ReviewImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True)
+    
+    class Meta:
+        model = Reviewimages
+        fields = ('image',)
+
+
+
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source = 'user.nickname')
+    images = serializers.SerializerMethodField()
+    
+    user = serializers.ReadOnlyField(source = 'user.id')
+    
+    def get_images(self, obj):
+        image = obj.reviewimage.all()
+        return ReviewImageSerializer(instance=image, many=True).data
+
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'updated_at','user','grade')
+        fields = ('id', 'title', 'content', 'updated_at','user','grade','images',)
+        # fields = '__all__'
 
-# class Matching_roomSerializer(serializers.ModelSerializer):
-#     persons = UserSerializer(many=True)
-#     def create(self, validated_data):
-#         persons = validated_data.pop('persons')
-#         matching_room = Matching_room.objects.create(**validated_data)
-#         if persons: # Bombs without this check
-#             User.objects.create(matching_room=matching_room, **persons)  # Errors here
-#         return matching_room
-#     class Meta:
-#         model = Matching_room
+    def create(self, validated_data):
+        instance = Review.objects.create(**validated_data)
+        image_set = self.context['request'].FILES
+        for image_data in image_set.getlist('image'):
+            Reviewimages.objects.create(review=instance, image=image_data)
+        return instance
 
 class Matching_roomSerializer(serializers.ModelSerializer):
     member = serializers.PrimaryKeyRelatedField(
