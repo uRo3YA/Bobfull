@@ -45,15 +45,21 @@ class matching_roomViewSet(viewsets.ModelViewSet):
        	
 
     def perform_create(self, serializer):
+        member=[self.request.user]
         store = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
-        serializer.save(user=self.request.user,restaurant=store)
+        serializer.save(user=self.request.user,restaurant=store,member=member)
         
         # return super().perform_create(serializer)
-
+    def get_queryset(self):
+        qs = super().get_queryset()
+        room = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        qs = qs.filter(restaurant=self.kwargs['restaurant_id'])
+       
+        return qs
 
 class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
     authentication_classes = [BasicAuthentication, SessionAuthentication]
-    def post(self, request,pk):
+    def post(self, request,restaurant_id,pk):
          
         room = get_object_or_404(Matching_room, id=pk)
         me = request.user
@@ -71,9 +77,3 @@ class person_reviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        qs = qs.filter(matching_room=self.kwargs['pk'])
-        
-        return qs

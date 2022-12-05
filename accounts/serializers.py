@@ -1,33 +1,32 @@
 from rest_framework import serializers
+from dj_rest_auth.registration.serializers import RegisterSerializer
+
+from .models import User
 from dj_rest_auth.serializers import UserDetailsSerializer
-from .models import *
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = '__all__'
-
-class UserSerializer(UserDetailsSerializer):
-
-    profile = ProfileSerializer()
-
+class CustomUserDetailsSerializer(UserDetailsSerializer):
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('profile',)
+        fields = UserDetailsSerializer.Meta.fields + (
+            "nickname",
+            "alcohol",
+            "talk",
+            "smoke",
+            "speed",
+            "gender",
+        )
 
-    def update(self, instance, validated_data):
-        profile_serializer = self.fields['profile']
-        profile_instance = instance.userprofile
-        profile_data = validated_data.pop('profile', {})
+class CustomUserRegisterSerializer(RegisterSerializer):
+    # 기본 설정 필드: nickname, password, email
+    # 추가 설정 필드: alcohol, talk, smoke, speed, gender, manner
+    def get_cleaned_data(self):
+        super(CustomUserRegisterSerializer, self).get_cleaned_data()
+        return {
+            "email": self.validated_data.get("email", ""),
+            "password1": self.validated_data.get("password1", ""),
+            "password2": self.validated_data.get("password2", ""),
+        }
 
-        # to access the 'company_name' field in here
-        alcohol = profile_data.get('alcohol')
-        talk = profile_data.get('talk')
-        smoke = profile_data.get('smoke')
-        speed = profile_data.get('speed')
-        gender = profile_data.get('gender')
-
-        # update the userprofile fields
-        profile_serializer.update(profile_instance, profile_data)
-
-        instance = super().update(instance, validated_data)
-        return instance
+    def save(self, request):
+        user = super().save(request)
+        user.save()
+        return user
