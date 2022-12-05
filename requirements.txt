@@ -15,8 +15,8 @@ django-appconf==1.0.5
 django-bootstrap5==22.1
 django-cors-headers==3.13.0
 django-extensions==3.2.1
+django-filter==22.1
 django-imagekit==4.1.0
-django-shortcuts==1.6
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 executing==1.1.1

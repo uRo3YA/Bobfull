@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'allauth',
     'allauth.account',
+    'django_filters',
     
     # 소셜부분
     'allauth.socialaccount',
