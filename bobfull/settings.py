@@ -74,8 +74,8 @@ REST_FRAMEWORK = {
 # REST 관련 설정
 # dj-rest-auth 설정
 REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'my-app-auth'
-JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+JWT_AUTH_COOKIE = 'jwt_token'
+JWT_AUTH_REFRESH_COOKIE = 'jwt_refresh_token'
 
 # django-allauth 설정
 SITE_ID = 1
@@ -138,7 +138,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'bobfull.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
