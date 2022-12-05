@@ -11,7 +11,7 @@ from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    nickname = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, null=True)
     username = None
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nickname']
+    REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.nickname
+        return self.email
