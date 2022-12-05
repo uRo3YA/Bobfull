@@ -13,7 +13,9 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             "smoke",
             "speed",
             "gender",
+            'manner'
         )
+        read_only_fields = ('manner', )
 
 class CustomUserRegisterSerializer(RegisterSerializer):
     # 기본 설정 필드: nickname, password, email

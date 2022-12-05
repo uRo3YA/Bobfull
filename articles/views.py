@@ -10,12 +10,13 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from rest_framework.generics import get_object_or_404
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.db.models import Q
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from restaurant.models import Restaurant
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
-    authentication_classes = [BasicAuthentication, SessionAuthentication]
+    authentication_classes = [JWTAuthentication]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
