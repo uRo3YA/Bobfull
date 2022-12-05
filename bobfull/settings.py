@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     # DRF
     'rest_framework',
+    "rest_framework_simplejwt",
     'rest_framework.authtoken',
     'dj_rest_auth',
     'dj_rest_auth.registration',
@@ -74,16 +75,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
 }
 
 # REST 관련 설정
 # dj-rest-auth 설정
 REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'jwt_token'
-JWT_AUTH_REFRESH_COOKIE = 'jwt_refresh_token'
+# JWT_AUTH_COOKIE = 'jwt_token'
+# JWT_AUTH_REFRESH_COOKIE = 'jwt_refresh_token'
 
 # django-allauth 설정
 SITE_ID = 1
@@ -125,7 +127,33 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = False
+
+# CORS 관련 추가
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'access-control-request-method',
+    'access-control-request-headers',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'access-token',
+    'Refresh',
+)
 
 ROOT_URLCONF = 'bobfull.urls'
 
