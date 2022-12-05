@@ -21,7 +21,7 @@ eval_Choices=(
 ## 식당 후기를 작성
 class Review(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=50)
+    #title = models.CharField(max_length=50)
     content = models.TextField()
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
