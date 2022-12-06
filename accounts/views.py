@@ -52,8 +52,9 @@ def google_callback(request):
     """
     Access Token Request
     """
+    GOOGLE_CALLBACK_URI_FRONT = 'http://localhost:3000/accounts/google/callback/'
     token_req = requests.post(
-        f"https://oauth2.googleapis.com/token?client_id={client_id}&client_secret={client_secret}&code={code}&grant_type=authorization_code&redirect_uri={GOOGLE_CALLBACK_URI}&state={state}")
+        f"https://oauth2.googleapis.com/token?client_id={client_id}&client_secret={client_secret}&code={code}&grant_type=authorization_code&redirect_uri={GOOGLE_CALLBACK_URI_FRONT}&state={state}")
     token_req_json = token_req.json()
     error = token_req_json.get("error")
     if error is not None:
@@ -93,7 +94,6 @@ def google_callback(request):
         if accept_status != 200:
             return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
         accept_json = accept.json()
-        accept_json.pop('user', None)
         return JsonResponse(accept_json)
     except User.DoesNotExist:
         # 기존에 가입된 유저가 없으면 새로 가입
@@ -104,8 +104,6 @@ def google_callback(request):
         if accept_status != 200:
             return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
         accept_json = accept.json()
-        accept_json.pop('user', None)
-        
         return JsonResponse(accept_json)
 
 class GoogleLogin(SocialLoginView):
