@@ -105,6 +105,7 @@ def google_callback(request):
             return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
         accept_json = accept.json()
         accept_json.pop('user', None)
+        
         return JsonResponse(accept_json)
 
 class GoogleLogin(SocialLoginView):
@@ -122,7 +123,7 @@ def kakao_login(request):
 def kakao_callback(request):
     rest_api_key = getattr(settings, 'KAKAO_REST_API_KEY')
     code = request.GET.get("code")
-    redirect_uri = KAKAO_CALLBACK_URI
+    redirect_uri = "http://localhost:3000/oauth/callback/kakao"
     """
     Access Token Request
     """
@@ -167,7 +168,6 @@ def kakao_callback(request):
         if accept_status != 200:
             return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
         accept_json = accept.json()
-        accept_json.pop('user', None)
         return JsonResponse(accept_json)
         
     except User.DoesNotExist:
@@ -180,7 +180,7 @@ def kakao_callback(request):
             return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
         # user의 pk, email, first name, last name과 Access Token, Refresh token 가져옴
         accept_json = accept.json()
-        accept_json.pop('user', None)
+        print(accept_json)  
         return JsonResponse(accept_json)
 
 class KakaoLogin(SocialLoginView):
