@@ -9,11 +9,8 @@ class ReviewImageSerializer(serializers.ModelSerializer):
         model = Reviewimages
         fields = ('image',)
 
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
-    
     user = serializers.ReadOnlyField(source = 'user.id')
     
     def get_images(self, obj):

@@ -1,6 +1,6 @@
 import requests
 from django.shortcuts import redirect
-from rest_framework import viewsets
+from rest_framework import authentication, viewsets
 from rest_framework import serializers
 from accounts.models import User
 from rest_framework.permissions import *
@@ -13,6 +13,7 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.http import JsonResponse
 from rest_framework import status
 from json.decoder import JSONDecodeError
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,7 +21,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # authentication_classes = [JWTAuthentication]
+    # 관리자만 전체 유저 정보 볼 수 있게
+    permission_classes = [IsAdminUser]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

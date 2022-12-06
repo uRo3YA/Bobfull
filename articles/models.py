@@ -16,8 +16,6 @@ eval_Choices=(
     ("아이디어 없음","아이디어 없음"),
 )
 
-
-
 ## 식당 후기를 작성
 class Review(models.Model):
     id = models.AutoField(primary_key=True)
@@ -32,13 +30,14 @@ class Review(models.Model):
 
     class Meta:
         db_table = 'review'
+
 # # 이미지 업로드 경로
 def image_upload_path(instance, filename):
     return f'review/{instance.review.id}/{filename}'
 
 class Reviewimages(models.Model):
     id = models.AutoField(primary_key=True)
-    review=models.ForeignKey(Review, on_delete=models.CASCADE, related_name='reviewimage')
+    review= models.ForeignKey(Review, on_delete=models.CASCADE, related_name='reviewimage')
     image = models.ImageField(null=True, blank=True,upload_to=image_upload_path)
     def __int__(self):
         return self.id
