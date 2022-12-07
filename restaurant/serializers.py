@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Restaurant, RestaurantImage, Category
+from .models import Restaurant, RestaurantImage, Category, RestaurantLike
 
 class RestaurantImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
@@ -29,5 +29,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
         for image_data in image_set.getlist('image'):
             RestaurantImage.objects.create(restaurant=instance, image=image_data)
         return instance
-    
+
+class LikeSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.email")
+    restaurant = serializers.ReadOnlyField(source="restaurant.pk")
+    class Meta:
+        model = RestaurantLike
+        fields = '__all__'
 
