@@ -4,7 +4,8 @@ from restaurant.serializers import InfoRestaurantSerializer, InfoReviewSerialize
 
 from .models import User
 from dj_rest_auth.serializers import UserDetailsSerializer
-
+from restaurant.models import RestaurantLike ,Restaurant
+from articles.models import Review
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     class Meta(UserDetailsSerializer.Meta):
         fields = UserDetailsSerializer.Meta.fields + (
@@ -38,15 +39,26 @@ class UserInfo(serializers.ModelSerializer):
     user = CustomUserDetailsSerializer(read_only=True)
     restaurants = serializers.SerializerMethodField()
     reviews = serializers.SerializerMethodField()
+    
 
-    def get_restaurants(self, obj):
-        restaurants = list(obj.restaurant_set.all())
+    def get_restaurants(self, user):
+        like_data=(RestaurantLike.objects.filter(user=user))
+        restaurants = list(Restaurant.objects.filter(id__in=like_data))
+        # restaurants = list(RestaurantLike.objects.filter(user=user))
         return InfoRestaurantSerializer(restaurants, many=True).data
+        
 
-    def get_reviews(self, obj):
-        reviews = list(obj.review_set.all())
+    def get_reviews(self, user):
+        reviews = list(Review.objects.filter(user=user))
+        # print(reviews)
         return InfoReviewSerializer(reviews, many=True).data
+    # def get_restaurants(self, obj):
+    #     restaurants = list(obj.restaurant_set.all())
+    #     return InfoRestaurantSerializer(restaurants, many=True).data
 
+    # def get_reviews(self, obj):
+    #     reviews = list(obj.review_set.all())
+    #     return InfoReviewSerializer(reviews, many=True).data
     class Meta:
         model = User
         fields = '__all__'
