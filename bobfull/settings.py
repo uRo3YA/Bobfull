@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'articles',
     'accounts',
     'restaurant',
+    'multichat',
 ]
 
 # permission 설정

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load django_bootstrap5 %}
+<div class='container'>
+    <div class='my-5'>
+    {% for room in rooms %}
+      <a href="{% url 'multichat:detail' room.5 %}">{{ room.5 }}번방 들어가기</a>
+      <br>
+      <p>{{ room.0 }}</p>
+      {% for user in room.1 %}
+        <span>{{ user.username }}</span>
+      {% endfor %}
+      <br>
+      {% if room.2 %}
+        <span>{{ room.2.username }}</span>
+        <span>{{ room.3 }}</span>
+        <span>{{ room.4 }}
+      {% endif %}
+      <br>
+    {% endfor %}
+    </div>
+</div>
+<a href="{% url 'multichat:create' %}">방 만들기</a>
+{% endblock %}

@@ -33,4 +33,5 @@ urlpatterns = [
     # path('accounts/', include('dj_rest_auth.registration.urls')),
     path('restaurant/', include('restaurant.urls')),
     path('', include(router.urls)),
+    path('multichat/', include('multichat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
