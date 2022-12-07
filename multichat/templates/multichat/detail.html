@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% for m in message_info %}
+{% if m.0 == request.user %}
+<div class='d-flex justify-content-end'>
+  {{ m.0 }}
+  {{ m.1 }}
+  {{ m.2 }}
+  {{ m.3 }}
+  <br>
+</div>
+{% else %}
+  {{ m.0 }}
+  {{ m.1 }}
+  {{ m.2 }}
+  {{ m.3 }}
+  <br>
+{% endif %}
+{% endfor %}
+
+<form action="{% url 'multichat:send' room.pk %}" method='POST'>
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% bootstrap_button button_type='submit' content='전송' %}
+</form>
+
+<a href="{% url 'multichat:index' %}">홈으로</a>
+{% if room.host == request.user %}
+<a href="{% url 'multichat:finish' room.pk %}">채팅방 삭제하기</a>
+{% endif %}
+{% comment %} <script src="{% static 'js/multichat.js' %}"></script> {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+{% endblock %}
