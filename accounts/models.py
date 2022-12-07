@@ -7,11 +7,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+# from restaurant.models import RestaurantLike
+
 from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    nickname = models.CharField(max_length=30, null=True)
+    nickname = models.CharField(max_length=30, null=True, default='익명의 밥알')
     username = None
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -33,3 +35,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+

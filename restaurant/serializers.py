@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from articles.models import Review
 from .models import Restaurant, RestaurantImage, Category, RestaurantLike
 
 class RestaurantImageSerializer(serializers.ModelSerializer):
@@ -35,5 +37,15 @@ class LikeSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField(source="restaurant.pk")
     class Meta:
         model = RestaurantLike
+        fields = '__all__'
+
+class InfoRestaurantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Restaurant
+        fields = '__all__'
+
+class InfoReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
         fields = '__all__'
 

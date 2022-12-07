@@ -1,11 +1,15 @@
 import requests
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework import authentication, viewsets
 from rest_framework import serializers
+from rest_framework.decorators import api_view
 from accounts.models import User
+from rest_framework.response import Response
 from rest_framework.permissions import *
 from django.conf import settings
+from accounts.serializers import UserInfo
 from allauth.socialaccount.models import SocialAccount
+from articles.models import Review
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.google import views as google_view
 from allauth.socialaccount.providers.kakao import views as kakao_view
@@ -14,6 +18,7 @@ from django.http import JsonResponse
 from rest_framework import status
 from json.decoder import JSONDecodeError
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from restaurant.models import RestaurantLike
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -185,3 +190,41 @@ class KakaoLogin(SocialLoginView):
     adapter_class = kakao_view.KakaoOAuth2Adapter
     client_class = OAuth2Client
     callback_url = KAKAO_CALLBACK_URI
+
+# 유저 페이지 확인 (유저정보 및 유저 작성한 글 확인 )
+@api_view(["GET", "PUT"])
+def my_page(request, user_pk):
+    user_info = get_object_or_404(User, pk=user_pk)
+    if request.method == "GET" and user_pk == request.user.pk:
+        serializers = UserInfo(user_info)
+        user_restaurant_likes = RestaurantLike.objects.filter(user=request.user)
+        user_reviews = Review.objects.filter(user=request.user)
+        restaurant_datas = []
+        # 좋아요 데이터 넣기
+        for restaurant in user_restaurant_likes:
+            restaurant_datas.append(
+                {
+                    "name": restaurant.name,
+                    "restaurant_pk": restaurant.restaurant.pk,
+                    "address": restaurant.address,
+                    "category": restaurant.category,
+                }
+            )
+        # 리뷰 데이터 넣기
+        for review in user_reviews:
+            restaurant_datas.append(
+                {
+                    "content": review.content,
+                    "restaurant_pk": review.restaurant.pk,
+                }
+            )
+        all_data = {"restaurant_datas": restaurant_datas, "userinfo": serializers.data}
+        return Response(all_data)
+
+    # 유저정보 수정 put메서드 사용 (raise_exception=True<- (commit=True)와 같은 역활
+    elif request.method == "PUT":
+        if request.user.is_authenticated:
+            serializers = UserInfo(data=request.data, instance=user_info)
+            if serializers.is_valid(raise_exception=True):
+                serializers.save()
+                return Response(serializers.data)
