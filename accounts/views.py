@@ -204,10 +204,11 @@ def my_page(request, user_pk):
         for restaurant in user_restaurant_likes:
             restaurant_datas.append(
                 {
-                    "name": restaurant.name,
+                    "name": restaurant.restaurant.name,
                     "restaurant_pk": restaurant.restaurant.pk,
-                    "address": restaurant.address,
-                    "category": restaurant.category,
+                    "address": restaurant.restaurant.address,
+                    "category": restaurant.restaurant.category.name
+                  
                 }
             )
         # 리뷰 데이터 넣기
