@@ -41,12 +41,11 @@ class LikeSerializer(serializers.ModelSerializer):
 
 class InfoRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Restaurant
         # model = RestaurantLike
+        model = Restaurant
         fields = '__all__'
 
 class InfoReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
-
