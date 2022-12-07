@@ -200,21 +200,17 @@ def my_page(request, user_pk):
         user_restaurant_likes = RestaurantLike.objects.filter(user_id=request.user)
         user_reviews = Review.objects.filter(user=request.user)
         restaurant_datas = []
-        # print(user_restaurant_likes[0].restaurant.name)
         # 좋아요 데이터 넣기
         for restaurant in user_restaurant_likes:
             restaurant_datas.append(
                 {
                     "name": restaurant.restaurant.name,
-                    # "name": "가게",
                     "restaurant_pk": restaurant.restaurant.pk,
                     "address": restaurant.restaurant.address,
-                    # "address": "주소",
                     "category": restaurant.restaurant.category.name
-                    # "category": "카테고리",
+                  
                 }
             )
-        # print(restaurant_datas)
         # 리뷰 데이터 넣기
         for review in user_reviews:
             restaurant_datas.append(
