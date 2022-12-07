@@ -9,16 +9,20 @@ from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from restaurant.permissions import IsOwnerOrReadOnly
+from rest_framework.pagination import LimitOffsetPagination
 
 # Create your views here.
 from .models import Restaurant, RestaurantLike
 from .serializers import LikeSerializer, RestaurantSerializer
 
+class RestaurantPagination(LimitOffsetPagination):
+    default_limit = 10
+
 class RestaurantViewSet(ModelViewSet):
 #    authentication_classes = [JWTAuthentication]
    queryset = Restaurant.objects.all()
    serializer_class = RestaurantSerializer
-   
+   pagination_class = RestaurantPagination
    filter_backends = [SearchFilter, DjangoFilterBackend]
    filterset_fields = ['category']
    search_fields = ['name', 'detail']
