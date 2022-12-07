@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from restaurant.serializers import InfoRestaurantSerializer, InfoReviewSerializer
 
 from .models import User
 from dj_rest_auth.serializers import UserDetailsSerializer
@@ -32,3 +33,20 @@ class CustomUserRegisterSerializer(RegisterSerializer):
         user = super().save(request)
         user.save()
         return user
+
+class UserInfo(serializers.ModelSerializer):
+    user = CustomUserDetailsSerializer(read_only=True)
+    restaurants = serializers.SerializerMethodField()
+    reviews = serializers.SerializerMethodField()
+
+    def get_restaurants(self, obj):
+        restaurants = list(obj.restaurant_set.all())
+        return InfoRestaurantSerializer(restaurants, many=True).data
+
+    def get_reviews(self, obj):
+        reviews = list(obj.review_set.all())
+        return InfoReviewSerializer(reviews, many=True).data
+
+    class Meta:
+        model = User
+        fields = '__all__'
