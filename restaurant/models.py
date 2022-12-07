@@ -3,6 +3,8 @@ from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
+from accounts.models import User
+
 class Category(models.Model):
     category_choices = (
         ('한식', '한식'),
@@ -27,7 +29,6 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=250)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='category_restaurants')
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_restaurants', blank=True)
     detail = models.TextField()
 
 def user_directory_path(instance, filename):
@@ -36,6 +37,14 @@ def user_directory_path(instance, filename):
 class RestaurantImage(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='restaurantimage')
     image = models.ImageField(upload_to=user_directory_path)
+
+# 음식점 좋아요(북마크)
+class RestaurantLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+
+
+    
     
 
     
