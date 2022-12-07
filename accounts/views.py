@@ -197,19 +197,24 @@ def my_page(request, user_pk):
     user_info = get_object_or_404(User, pk=user_pk)
     if request.method == "GET" and user_pk == request.user.pk:
         serializers = UserInfo(user_info)
-        user_restaurant_likes = RestaurantLike.objects.filter(user=request.user)
+        user_restaurant_likes = RestaurantLike.objects.filter(user_id=request.user)
         user_reviews = Review.objects.filter(user=request.user)
         restaurant_datas = []
+        # print(user_restaurant_likes[0].restaurant.name)
         # 좋아요 데이터 넣기
         for restaurant in user_restaurant_likes:
             restaurant_datas.append(
                 {
-                    "name": restaurant.name,
+                    "name": restaurant.restaurant.name,
+                    # "name": "가게",
                     "restaurant_pk": restaurant.restaurant.pk,
-                    "address": restaurant.address,
-                    "category": restaurant.category,
+                    "address": restaurant.restaurant.address,
+                    # "address": "주소",
+                    "category": restaurant.restaurant.category.name
+                    # "category": "카테고리",
                 }
             )
+        # print(restaurant_datas)
         # 리뷰 데이터 넣기
         for review in user_reviews:
             restaurant_datas.append(
@@ -218,7 +223,8 @@ def my_page(request, user_pk):
                     "restaurant_pk": review.restaurant.pk,
                 }
             )
-        all_data = {"restaurant_datas": restaurant_datas, "userinfo": serializers.data}
+        # all_data = {"restaurant_datas": restaurant_datas, "userinfo": serializers.data}
+        all_data = {"userinfo": serializers.data}
         return Response(all_data)
 
     # 유저정보 수정 put메서드 사용 (raise_exception=True<- (commit=True)와 같은 역활
