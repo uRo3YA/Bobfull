@@ -1,3 +1,5 @@
+from os import environ
+import os
 import requests
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import authentication, viewsets
@@ -10,6 +12,7 @@ from django.conf import settings
 from accounts.serializers import UserInfo
 from allauth.socialaccount.models import SocialAccount
 from articles.models import Review
+from bobfull.settings import BASE_DIR
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.google import views as google_view
 from allauth.socialaccount.providers.kakao import views as kakao_view
@@ -37,7 +40,8 @@ BASE_URL = 'http://localhost:8000/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'accounts/google/callback/'
 KAKAO_CALLBACK_URI = BASE_URL + 'accounts/kakao/callback/'
 
-state = getattr(settings, 'STATE')
+# state = getattr(settings, 'STATE')
+state = os.getenv("STATE")
 
 # 구글 로그인
 # google_login 실행
@@ -46,13 +50,13 @@ def google_login(request):
     Code Request
     """
     scope = "https://www.googleapis.com/auth/userinfo.email"
-    client_id = getattr(settings, "SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+    client_id = os.getenv("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
     return redirect(f"https://accounts.google.com/o/oauth2/v2/auth?client_id={client_id}&response_type=code&redirect_uri={GOOGLE_CALLBACK_URI}&scope={scope}")
 
 # 받은 Code로 Google에 Access Token 요청
 def google_callback(request):
-    client_id = getattr(settings, "SOCIAL_AUTH_GOOGLE_CLIENT_ID")
-    client_secret = getattr(settings, "SOCIAL_AUTH_GOOGLE_SECRET")
+    client_id = os.getenv("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+    client_secret = os.getenv("SOCIAL_AUTH_GOOGLE_SECRET")
     code = request.GET.get('code')
     """
     Access Token Request
@@ -118,13 +122,13 @@ class GoogleLogin(SocialLoginView):
 
 # 카카오
 def kakao_login(request):
-    rest_api_key = getattr(settings, 'KAKAO_REST_API_KEY')
+    rest_api_key = os.getenv("KAKAO_REST_API_KEY")
     return redirect(
         f"https://kauth.kakao.com/oauth/authorize?client_id={rest_api_key}&redirect_uri={KAKAO_CALLBACK_URI}&response_type=code"
     )
 
 def kakao_callback(request):
-    rest_api_key = getattr(settings, 'KAKAO_REST_API_KEY')
+    rest_api_key = os.getenv("KAKAO_REST_API_KEY")
     code = request.GET.get("code")
     redirect_uri = "http://localhost:3000/oauth/callback/kakao"
     """
