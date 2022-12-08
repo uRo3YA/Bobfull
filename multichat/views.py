@@ -6,6 +6,9 @@ from django.contrib.auth import get_user_model
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import time
+from rest_framework.response import Response
+from rest_framework import status
+from articles.models import Matching_room
 
 
 @login_required
@@ -23,7 +26,7 @@ def index(request):
                 m_count += 1
         rooms_info.append((r.host, r.users.all, r.last_user, r.last_message, m_count, r.pk))
     context = {"rooms": rooms_info}
-    return render(request, "multichat/index.html", context)
+    return JsonResponse(context)
 
 
 @login_required
@@ -55,34 +58,61 @@ def detail(request, room_pk):
             "message_info": message_info,
             "form": form,
         }
-        return render(request, "multichat/detail.html", context)
-    return redirect("multichat:index")
+        return JsonResponse(context)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 @login_required
-def create(request):
+def create(request, matchingroom_pk):
     host = get_user_model().objects.get(pk=request.user.pk)
-    # users에는 matchingroom의 member가 와야함, create함수에 matchingroom pk를 받고 matchingroom의 member.all을 user로 설정
-    # 이건 임시방편으로 모든 유저로 채팅 만든겨 
-    users = get_user_model().objects.all()
-    room = ChatRoom.objects.create(host=host)
+    # users에는 matchingroom의 member가 와야함, create함수에 matchingroom pk를 받고 matchingroom의 member.all을 user로 설정 
+    matching_room = Matching_room.objects.get(pk=matchingroom_pk)
+    users = matching_room.member.all()
+    room = ChatRoom.objects.create(host=host, matching_room=matching_room)
     room.save()
     # users를 room의 users에 하나하나씩 add해야함
     for u in users:
         room.users.add(u)
         room.save()
     context = {'room': room}
-    return redirect("multichat:index")
+    return JsonResponse(context)
+
+# 매칭룸에는 있으나 채팅에는 없는 유저가 채팅창에 들어오려고함, 멤버로 add하고 채팅창에 들어가기까지 구현함
+@login_required
+def join(request, matchingroom_pk):
+    user = get_user_model().objects.get(pk=request.user.pk)
+    matching_room = Matching_room.objects.get(pk=matchingroom_pk)
+    room = ChatRoom.objects.get(matching_room=matching_room)
+    if user in matching_room.member.all() and user not in room.users.all():
+        room.users.add(user)
+        room.save()
+        # 메세지는 오래된 것부터 위에서부터 읽으니까...?
+        messages = Message.objects.filter(room=room).order_by('created_at')
+        for m in messages:
+            # 채팅창에 접속했으니까 기존에 채팅창에 있던 메세지들을 다 볼 수 있으니 True상태의 unreadmessage데이터를 생성함
+            UnreadMessage.objects.create(message=m, user=user, read=True)  
+        message_info = [] 
+        for m in messages:
+            read = UnreadMessage.objects.filter(message=m, read=True).count()
+            # 메세지를 읽지 않은 사람의 수
+            unread = room.users.all().count() - read
+            message_info.append((m.sender, m.content, m.created_at, unread))
+        form = MessageForm()
+        context = {
+            "room": room,            
+            "message_info": message_info,
+            "form": form,
+        }
+        return JsonResponse(context)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
+    
 
 # 일단은 끝난 채팅창을 안보임 처리만 해두고 db삭제 구현은 못했음 return밑으로 안돌아가더라
 @login_required
 def finish(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
     if room.host == get_user_model().objects.get(pk=request.user.pk):
-        room.finished = True
-        room.save()
-        return redirect("multichat:index")
-        time.sleep(60)
         room.delete()
+        return Response({}, status=status.HTTP_201_CREATED)
         
         
 @require_POST
@@ -105,8 +135,7 @@ def send(request, room_pk):
         u = UnreadMessage.objects.get(message=message, user=message.sender)
         u.read = True
         u.save()
-        # messages = Message.objects.filter(room=room).order_by('-created_at')
-        # context = {'messages': messages}
-        # return JsonResponse(context)
-        return redirect("multichat:detail", room_pk)  
-    return render(request, "multichat/detail.html", {"form": form})
+        messages = Message.objects.filter(room=room).order_by('-created_at')
+        context = {'messages': messages}
+        return JsonResponse(context)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
