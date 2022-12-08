@@ -36,7 +36,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
         # return super().perform_create(serializer)
 
 class matching_roomViewSet(viewsets.ModelViewSet):
-    authentication_classes = [BasicAuthentication, SessionAuthentication]
     queryset = Matching_room.objects.all()
     serializer_class = Matching_roomSerializer
        	
@@ -55,7 +54,6 @@ class matching_roomViewSet(viewsets.ModelViewSet):
         return qs
 
 class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
-    authentication_classes = [BasicAuthentication, SessionAuthentication]
     def post(self, request,restaurant_id,pk):
          
         room = get_object_or_404(Matching_room, id=pk)
@@ -68,7 +66,6 @@ class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
             return Response("매칭을 참가했습니다.", status=status.HTTP_200_OK)
 
 class person_reviewViewSet(viewsets.ModelViewSet):
-    authentication_classes = [BasicAuthentication, SessionAuthentication]
     queryset = person_review.objects.all()
     serializer_class = person_reviewSerializer
 
