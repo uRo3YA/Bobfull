@@ -1,6 +1,7 @@
 from django.db import models
 from django.db import models
 from django.conf import settings
+from articles.models import Matching_room
 
 # Create your models here.
 
@@ -10,13 +11,14 @@ class ChatRoom(models.Model):
     host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='host_chatroom')
     # 얘는 matchingroom의 member
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_chatroom')
+    matching_room = models.ForeignKey(Matching_room, on_delete=models.CASCADE)
     # send함수로 넣을 수 있음, create에서는 일단은 없는게 당연함
     last_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     last_message = models.TextField(null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # finish함수를 통해서 구현하고, finish된 후 하루 정도 지나면 자동으로 delete되게
-    finished = models.BooleanField(default=False)
-    finished_at = models.DateTimeField(auto_now=True)
+    # finish함수를 통해서 구현하고, finish된 후 하루 정도 지나면 자동으로 delete되게 -> 필요없을듯...
+    # finished = models.BooleanField(default=False)
+    # finished_at = models.DateTimeField(auto_now=True)
     
 class Message(models.Model):
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
