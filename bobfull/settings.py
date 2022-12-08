@@ -44,7 +44,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = [
     # "Elastic Beanstalk URL",
 		# 주소 마지막에 / 를 작성하지 말아주세요.
-    "Bobfullbeanstalk-env.eba-z2vzgimj.ap-northeast-2.elasticbeanstalk.com", # 예시입니다. 본인 URL로 해주세요.
+    "Bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com", # 예시입니다. 본인 URL로 해주세요.
     "127.0.0.1",
     "localhost",
 ]
