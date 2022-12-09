@@ -28,8 +28,8 @@ class Review(models.Model):
     def __int__(self):
         return self.id
 
-    class Meta:
-        db_table = '식당리뷰'
+    # class Meta:
+    #     db_table = '식당리뷰'
 
 # # 이미지 업로드 경로
 def image_upload_path(instance, filename):
@@ -42,8 +42,8 @@ class Reviewimages(models.Model):
     def __int__(self):
         return self.id
 
-    class Meta:
-        db_table = '리뷰이미지'
+    # class Meta:
+    #     db_table = '리뷰이미지'
 
 class Matching_room(models.Model):
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
@@ -54,8 +54,8 @@ class Matching_room(models.Model):
     # members = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='members')
     member = models.ManyToManyField(User, symmetrical=False, related_name='members')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    class Meta:
-        db_table = '매칭룸'
+    # class Meta:
+    #     db_table = '매칭룸'
 ## 같이 간 사람의 평가
 class person_review(models.Model):
     ## 방 번호
@@ -66,5 +66,5 @@ class person_review(models.Model):
     evaluation=models.CharField(max_length=80,choices=eval_Choices)
     ## 평가할 멤버
     # to_member=models.ManyToManyField(Matching_room, related_name='review_members')
-    class Meta:
-        db_table = '만남후기'
+    # class Meta:
+    #     db_table = '만남후기'
