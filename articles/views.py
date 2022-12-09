@@ -19,7 +19,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context["request"] = self.request
-        print(context["request"])
+        # print(context["request"])
         return context
 
     def perform_create(self, serializer):
@@ -77,10 +77,14 @@ class person_reviewViewSet(viewsets.ModelViewSet):
         return context
    
     def perform_create(self, serializer):
-        serializer.save(user = self.request.user, )
+        room = get_object_or_404(Matching_room, id=self.kwargs['matching_room_id'])
+        serializer.save(user = self.request.user, matching_room=room)
         review_data=(serializer.data)
+        # print(review_data)
+        # memdata=review_data['matching_room']['member']
+        # print(memdata)
         #멤버 뽑아내기
-        mem_data=(review_data['to_member'])
+        mem_data=review_data['matching_room']['member']
 
         for mem in mem_data:
             #작성자 멤버 삭제
@@ -107,11 +111,12 @@ class person_reviewViewSet(viewsets.ModelViewSet):
 
 
     def perform_update(self, serializer):
-        
-        serializer.save(user = self.request.user, )
+        room = get_object_or_404(Matching_room, id=self.kwargs['matching_room_id'])
+        serializer.save(user = self.request.user, matching_room=room)
         review_data=(serializer.data)
-        #멤버 뽑아내기
-        mem_data=(review_data['to_member'])    
+        # print(review_data)
+        # #멤버 뽑아내기
+        mem_data=review_data['matching_room']['member']   
 
         for mem in mem_data:
             #작성자 멤버 삭제
@@ -135,7 +140,7 @@ class person_reviewViewSet(viewsets.ModelViewSet):
                     manner_score=-1
                     user_info.manner+=manner_score
                     user_info.save()
-        # print(user_info)
-        # print(user_info.manner)
+                # print(user_info)
+                # print(user_info.manner)
         # print(review_data['evaluation'])
 

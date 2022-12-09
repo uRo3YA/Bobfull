@@ -41,20 +41,20 @@ class Matching_roomSerializer(serializers.ModelSerializer):
         fields = ('id','user','title', 'from_date','to_date','content','member','restaurant')
 
 class person_reviewSerializer(serializers.ModelSerializer):
-    to_member=serializers.SerializerMethodField()
+    # to_member=serializers.SerializerMethodField()
     # matching_room=serializers.ReadOnlyField(source = 'person_review.matching_room')
     matching_room = Matching_roomSerializer(read_only=True)
     # print(matching_room)
-    def get_to_member(self,matching_room):
-        # print(matching_room.id)
-        room = (Matching_room.objects.get(pk=int(matching_room.id)))
+    # def get_to_member(self,matching_room):
+    #     # print(matching_room.id)
+    #     room = (Matching_room.objects.get(pk=int(matching_room.id)))
         
-        a=(room.member).all()
-        mem=[]
-        for i in a:
-            mem.append(i.id)
+    #     a=(room.member).all()
+    #     mem=[]
+    #     for i in a:
+    #         mem.append(i.id)
    
-        return mem
+    #     return mem
     class Meta:
         model = person_review
         fields='__all__'
