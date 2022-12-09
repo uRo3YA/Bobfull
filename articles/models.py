@@ -63,4 +63,5 @@ class person_review(models.Model):
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
     ## 평가요소
     evaluation=models.CharField(max_length=80,choices=eval_Choices)
-    ## 
+    ## 평가할 멤버
+    to_member=models.ManyToManyField(Matching_room, related_name='review_members')

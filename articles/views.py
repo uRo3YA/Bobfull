@@ -11,7 +11,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.db.models import Q
 from restaurant.models import Restaurant
-
+from accounts.models import User
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -65,9 +65,77 @@ class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
             room.member.add(me) # 너의 룸에 나를 더해라
             return Response("매칭을 참가했습니다.", status=status.HTTP_200_OK)
 
+
 class person_reviewViewSet(viewsets.ModelViewSet):
+    
     queryset = person_review.objects.all()
     serializer_class = person_reviewSerializer
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
+   
     def perform_create(self, serializer):
-        serializer.save(user = self.request.user)
+        serializer.save(user = self.request.user, )
+        review_data=(serializer.data)
+        #멤버 뽑아내기
+        mem_data=(review_data['to_member'])
+
+        for mem in mem_data:
+            #작성자 멤버 삭제
+            if mem==self.request.user.pk:
+                continue
+            else:
+                user_info = get_object_or_404(User, pk=mem)
+                if (review_data['evaluation']) =="매너가 좋았어요.":
+                    manner_score=1
+                    user_info.manner+=manner_score
+                    user_info.save()
+                elif (review_data['evaluation']) =="제 시간에 맞춰 왔어요.":
+                    manner_score=0.5
+                    user_info.manner+=manner_score
+                    user_info.save()
+                elif (review_data['evaluation']) =="여기는 뭐 추가?":
+                    manner_score=-0.5
+                    user_info.manner+=manner_score
+                    user_info.save()
+                elif (review_data['evaluation']) =="아이디어 없음":
+                    manner_score=-1
+                    user_info.manner+=manner_score
+                    user_info.save()
+
+
+    def perform_update(self, serializer):
+        
+        serializer.save(user = self.request.user, )
+        review_data=(serializer.data)
+        #멤버 뽑아내기
+        mem_data=(review_data['to_member'])    
+
+        for mem in mem_data:
+            #작성자 멤버 삭제
+            if mem==self.request.user.pk:
+                continue
+            else:
+                user_info = get_object_or_404(User, pk=mem)
+                if (review_data['evaluation']) =="매너가 좋았어요.":
+                    manner_score=1
+                    user_info.manner+=manner_score
+                    user_info.save()
+                elif (review_data['evaluation']) =="제 시간에 맞춰 왔어요.":
+                    manner_score=0.5
+                    user_info.manner+=manner_score
+                    user_info.save()
+                elif (review_data['evaluation']) =="여기는 뭐 추가?":
+                    manner_score=-0.5
+                    user_info.manner+=manner_score
+                    user_info.save()
+                elif (review_data['evaluation']) =="아이디어 없음":
+                    manner_score=-1
+                    user_info.manner+=manner_score
+                    user_info.save()
+        # print(user_info)
+        # print(user_info.manner)
+        # print(review_data['evaluation'])
+
