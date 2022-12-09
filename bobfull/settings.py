@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'environ',
+    'imagekit',
 
     # CORS
     'corsheaders',
