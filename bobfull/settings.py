@@ -168,7 +168,7 @@ CORS_ALLOW_HEADERS = (
     'authorization',
     'access-control-request-method',
     'access-control-request-headers',
-    'access-control-allow-origin'
+    'access-control-allow-origin',
     'content-type',
     'dnt',
     'origin',
