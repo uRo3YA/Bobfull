@@ -9,29 +9,45 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-from datetime import timedelta
 import os
-from pathlib import Path
+
+from django.conf.global_settings import STATICFILES_DIRS
+from dotenv import load_dotenv
+load_dotenv()
+from datetime import timedelta
 import json
 import sys
+import environ
 
+from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Secret 키 분리
-ROOT_DIR = os.path.dirname(BASE_DIR)
-SECRET_BASE_FILE = os.path.join(BASE_DIR, 'secrets.json')
-secrets = json.loads(open(SECRET_BASE_FILE).read())
-for key, value in secrets.items():
-    setattr(sys.modules[__name__], key, value)
+# 환경변수를 불러올 수 있는 상태로 세팅
+env = environ.Env(DEBUG=(bool, True))
+
+# .env에서 가져올거야
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
+
+# SECRET_KEY와 DEBUG 값 불러올 수 있게 설정
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    # "Elastic Beanstalk URL",
+		# 주소 마지막에 / 를 작성하지 말아주세요.
+    "Bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com", # 예시입니다. 본인 URL로 해주세요.
+    "127.0.0.1",
+    "localhost",
+]
 
 # Application definition
 
@@ -43,6 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'environ',
+    'imagekit',
 
     # CORS
     'corsheaders',
@@ -68,6 +86,9 @@ INSTALLED_APPS = [
     'accounts',
     'restaurant',
     'multichat',
+
+    # s3
+    "storages",
 ]
 
 # permission 설정
@@ -127,6 +148,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
+    'https://master.d23us6abru3x73.amplifyapp.com',
 ]
 CORS_ALLOW_CREDENTIALS = False
 
@@ -179,14 +201,6 @@ WSGI_APPLICATION = 'bobfull.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -224,8 +238,47 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+STATIC_ROOT = 'staticfiles'
+
+# 일단 보류 - 1:20:40
+# STATICFILES_DIRS = [
+#     BASE_DIR / "config" / "static",
+# ]
+
+# 개발 환경과 배포 환경의 미디어 파일 분리
+DEBUG = os.getenv("DEBUG") == "True"
+if DEBUG: 
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    # MEDIA_ROOT = BASE_DIR / "media"
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+else:   
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+
+    AWS_REGION = "ap-northeast-2"
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
+        AWS_STORAGE_BUCKET_NAME,
+        AWS_REGION,
+    )
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env('DATABASE_NAME'), # 코드 블럭 아래 이미지 참고하여 입력
+            "USER": "postgres",
+            "PASSWORD": env('DATABASE_PASSWORD'), # 데이터베이스 생성 시 작성한 패스워드
+            "HOST": env('DATABASE_HOST'), # 코드 블럭 아래 이미지 참고하여 입력
+            "PORT": "5432",
+        }
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

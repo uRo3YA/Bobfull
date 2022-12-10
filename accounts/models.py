@@ -6,10 +6,13 @@ from django.contrib.auth.models import (
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-# from restaurant.models import RestaurantLike
-
 from .managers import UserManager
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+
+# 이미지 업로드 경로
+def image_upload_path(instance, filename):
+    return f'account/{instance.id}/{filename}'
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
@@ -27,6 +30,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     speed = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], default = 3)   
     gender = models.BooleanField(default=False) # False가 남자    
     manner = models.FloatField(default=36.5)
+    profile_image = ProcessedImageField(
+        upload_to=image_upload_path,
+        blank=True,
+        null=True,
+        processors=[ResizeToFill(100, 100)],
+        format="JPEG",
+        options={"quality": 80},
+    )
 
     objects = UserManager()
 
@@ -35,5 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-
+    # class Meta:
+    #     db_table = '유저정보'
+# class UserProfileImage(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profileimage')

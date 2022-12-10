@@ -17,13 +17,14 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             "smoke",
             "speed",
             "gender",
-            'manner'
+            "manner",
+            "profile_image",
         )
         read_only_fields = ('manner', )
 
 class CustomUserRegisterSerializer(RegisterSerializer):
     # 기본 설정 필드: nickname, password, email
-    # 추가 설정 필드: alcohol, talk, smoke, speed, gender, manner
+    # 추가 설정 필드: alcohol, talk, smoke, speed, gender, manner, profile_image
     def get_cleaned_data(self):
         super(CustomUserRegisterSerializer, self).get_cleaned_data()
         return {
@@ -41,7 +42,6 @@ class UserInfo(serializers.ModelSerializer):
     user = CustomUserDetailsSerializer(read_only=True)
     restaurants = serializers.SerializerMethodField()
     reviews = serializers.SerializerMethodField()
-    
 
     def get_restaurants(self, user):
         like_data=(RestaurantLike.objects.filter(user=user))

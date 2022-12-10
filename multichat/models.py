@@ -19,7 +19,8 @@ class ChatRoom(models.Model):
     # finish함수를 통해서 구현하고, finish된 후 하루 정도 지나면 자동으로 delete되게 -> 필요없을듯...
     # finished = models.BooleanField(default=False)
     # finished_at = models.DateTimeField(auto_now=True)
-    
+    # class Meta:
+    #     db_table = '채팅룸'
 class Message(models.Model):
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     # request.user == sender
@@ -28,10 +29,16 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     unread = models.IntegerField(default=0)
 
+    # class Meta:
+    #     db_table = '채팅메세지'
+
+
 # 유저별로 모든 메세지에 대해 read TF를 만들어놓고 읽으면 T로 바꾸는 작업, message의 room_number로 거르고
 # 채팅방 안읽은사람 count하고, room_number마다 안읽은 메세지 count하고
 class UnreadMessage(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     read = models.BooleanField(default=False)
+    # class Meta:
+    #     db_table = '안읽은 메세지'
 
