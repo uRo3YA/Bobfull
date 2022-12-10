@@ -148,7 +148,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
-    'https://Bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com',
+    'https://master.d23us6abru3x73.amplifyapp.com',
 ]
 CORS_ALLOW_CREDENTIALS = False
 
