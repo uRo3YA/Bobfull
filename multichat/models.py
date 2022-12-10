@@ -26,6 +26,7 @@ class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    unread = models.IntegerField(default=0)
 
 # 유저별로 모든 메세지에 대해 read TF를 만들어놓고 읽으면 T로 바꾸는 작업, message의 room_number로 거르고
 # 채팅방 안읽은사람 count하고, room_number마다 안읽은 메세지 count하고
