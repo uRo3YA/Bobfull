@@ -171,6 +171,8 @@ CORS_ALLOW_HEADERS = (
     'access-control-allow-origin',
     'content-type',
     'dnt',
+    'pragma',
+    'Expires',
     'origin',
     'user-agent',
     'x-csrftoken',
