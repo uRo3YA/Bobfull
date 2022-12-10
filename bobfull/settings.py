@@ -174,6 +174,7 @@ CORS_ALLOW_HEADERS = (
     'pragma',
     'Expires',
     'origin',
+    'cache-control',
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
