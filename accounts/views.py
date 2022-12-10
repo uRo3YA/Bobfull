@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 # 기본 설정
-BASE_URL = 'http://localhost:8000/'
+BASE_URL = 'https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'accounts/google/callback/'
 KAKAO_CALLBACK_URI = BASE_URL + 'accounts/kakao/callback/'
 
@@ -61,7 +61,7 @@ def google_callback(request):
     """
     Access Token Request
     """
-    GOOGLE_CALLBACK_URI_FRONT = 'http://localhost:3000/accounts/google/callback/'
+    GOOGLE_CALLBACK_URI_FRONT = 'https://master.d23us6abru3x73.amplifyapp.com/accounts/google/callback/'
     token_req = requests.post(
         f"https://oauth2.googleapis.com/token?client_id={client_id}&client_secret={client_secret}&code={code}&grant_type=authorization_code&redirect_uri={GOOGLE_CALLBACK_URI_FRONT}&state={state}")
     token_req_json = token_req.json()
@@ -130,7 +130,7 @@ def kakao_login(request):
 def kakao_callback(request):
     rest_api_key = os.getenv("KAKAO_REST_API_KEY")
     code = request.GET.get("code")
-    redirect_uri = "http://localhost:3000/oauth/callback/kakao"
+    redirect_uri = "https://master.d23us6abru3x73.amplifyapp.com/oauth/callback/kakao"
     """
     Access Token Request
     """
