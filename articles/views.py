@@ -144,3 +144,11 @@ class person_reviewViewSet(viewsets.ModelViewSet):
                 # print(user_info.manner)
         # print(review_data['evaluation'])
 
+class matching_listViewSet(viewsets.ModelViewSet):
+    queryset = Matching_room.objects.all()
+    serializer_class = Matching_roomSerializer
+    # print(queryset)
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context

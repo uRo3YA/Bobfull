@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 # from .views import *
-from .views import ReviewViewSet,matching_roomViewSet,person_reviewViewSet
+from .views import ReviewViewSet,matching_roomViewSet,person_reviewViewSet,matching_listViewSet
 from . import views
 # review 목록 보여주기
 review_list = ReviewViewSet.as_view({
@@ -41,7 +41,12 @@ matching_room_review_detail = person_reviewViewSet.as_view({
     'delete': 'destroy'
 })
 
-
+matching_list = matching_listViewSet.as_view({
+    'get': 'list',
+})
+matching_list_detail = matching_listViewSet.as_view({
+    'get': 'retrieve',
+})
 urlpatterns = [
     # path('review/', ReviewList.as_view()),
     # path('review/<int:pk>/', ReviewDetail.as_view()),
@@ -55,7 +60,9 @@ urlpatterns = [
     path('<int:restaurant_id>/matching_room/<int:pk>/add/', views.add_memberView.as_view(), name="add_member"), # 멤버추가
     # path('matching_room/<int:pk>/review/add/',views.person_reviewView.as_view(), name="add_personreview")# 사람 후기
     path('<int:restaurant_id>/matching_room/<int:matching_room_id>/review/',matching_room_review_list),
-    path('<int:restaurant_id>/matching_room/<int:matching_room_id>/review/<int:pk>/',matching_room_review_detail)
+    path('<int:restaurant_id>/matching_room/<int:matching_room_id>/review/<int:pk>/',matching_room_review_detail),
+    path('matching_list/',matching_list),
+    path('matching_list/<int:pk>/',matching_list_detail)
     ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
