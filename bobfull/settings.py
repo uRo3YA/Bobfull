@@ -150,7 +150,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
-    'https://master.d23us6abru3x73.amplifyapp.com',
+    'https://master.d23us6abru3x73.amplifyapp.com',  # 계정정지 
+    'https://master.d3n2xysrd0lvj9.amplifyapp.com',  # 예비분
 ]
 CORS_ALLOW_CREDENTIALS = False
 
@@ -252,8 +253,8 @@ STATIC_ROOT = 'staticfiles'
 # ]
 
 # 개발 환경과 배포 환경 미디어 파일 분리!
-DEBUG = os.getenv("DEBUG") == "True"
-# DEBUG = False
+# DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = False
 if DEBUG: 
     MEDIA_URL = "/media/"
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
