@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Article, Comment, Like, ReComment
 
 class ReCommentSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.nickname")
     parent = serializers.ReadOnlyField(source="parent.pk")
     article = serializers.ReadOnlyField(source="article.pk")
 
@@ -18,6 +19,7 @@ class ReCommentSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source="user.nickname")
+    userpk = serializers.ReadOnlyField(source="user.pk")
     article = serializers.ReadOnlyField(source="article.pk")
     soncomments = ReCommentSerializer(many=True, read_only=True)
 
@@ -27,6 +29,7 @@ class CommentSerializer(serializers.ModelSerializer):
             "pk",
             "article",
             "user",
+            "userpk",
             "content",
             "created_at",
             "soncomments",
@@ -42,10 +45,11 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = [
             "pk",
             "title",
-            "user",
+            "content",
             "comments",
             "total_likes",
         ]
+
     def get_total_likes(self, article):
         return article.like.count()
 

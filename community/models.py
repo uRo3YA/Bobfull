@@ -13,9 +13,9 @@ class Article(models.Model):
         ordering = ["-created_at"]
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name='comments', null=False, blank=False, on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
-    comment = models.CharField(max_length=100)
+    content = models.CharField(max_length=100)
     created_at = models.DateTimeField('생성시간', auto_now_add=True)
 
 class Like(models.Model):
