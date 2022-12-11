@@ -22,7 +22,7 @@ urlpatterns = [
         "<int:article_pk>/comment/<int:comment_pk>/recomment/",
         views.ReCommentViewSet.as_view({"post": "create", "get": "list"}),
     ),
-    # 수정
+    # 댓글 수정
     path(
         "<int:article_pk>/comment/<int:comment_pk>/recomment/<int:pk>",
         views.ReCommentViewSet.as_view(
