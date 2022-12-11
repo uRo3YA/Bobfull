@@ -15,19 +15,24 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-        
+
     def retrieve(self, request, pk=None):
         queryset = Article.objects.all()
         user = get_object_or_404(queryset, pk=pk)
         serializer = ArticleSerializer(user)
-        return response(serializer.data)
+        return Response(serializer.data)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Comment.objects.all()
-
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            article=Article.objects.get(pk=self.kwargs.get("article_pk")),
+        )
+        
     def get_queryset(self):
         return super().get_queryset().filter(article=self.kwargs.get("article_pk"))
 
