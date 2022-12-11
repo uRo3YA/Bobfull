@@ -47,6 +47,7 @@ ALLOWED_HOSTS = [
     "Bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com", # 예시입니다. 본인 URL로 해주세요.
     "127.0.0.1",
     "localhost",
+    "bobfull-backend.shop",
 ]
 
 # Application definition
@@ -86,6 +87,7 @@ INSTALLED_APPS = [
     'accounts',
     'restaurant',
     'multichat',
+    'community',
 
     # s3
     "storages",
@@ -251,6 +253,7 @@ STATIC_ROOT = 'staticfiles'
 
 # 개발 환경과 배포 환경의 미디어 파일 분리
 DEBUG = os.getenv("DEBUG") == "True"
+# DEBUG = False
 if DEBUG: 
     MEDIA_URL = "/media/"
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
