@@ -34,4 +34,5 @@ urlpatterns = [
     path('restaurant/', include('restaurant.urls')),
     path('', include(router.urls)),
     path('multichat/', include('multichat.urls')),
+    path('community/', include('community.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
