@@ -1,4 +1,3 @@
-from asyncio import mixins
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, response, viewsets, status, mixins
 from rest_framework import permissions
