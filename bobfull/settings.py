@@ -251,7 +251,7 @@ STATIC_ROOT = 'staticfiles'
 #     BASE_DIR / "config" / "static",
 # ]
 
-# 개발 환경과 배포 환경의 미디어 파일 분리
+# 개발 환경과 배포 환경 미디어 파일 분리
 DEBUG = os.getenv("DEBUG") == "True"
 # DEBUG = False
 if DEBUG: 
