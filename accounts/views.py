@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 # 기본 설정
-BASE_URL = 'https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/'
+BASE_URL = 'https://bobfull-backend.shop/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'accounts/google/callback/'
 KAKAO_CALLBACK_URI = BASE_URL + 'accounts/kakao/callback/'
 
