@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'django_filters',
-    'drf_yasg', # 자동 API 문서
     
     # 소셜부분
     'allauth.socialaccount',

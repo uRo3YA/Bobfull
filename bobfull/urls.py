@@ -24,26 +24,10 @@ from accounts.views import UserViewSet
 from django.conf.urls import url
 from rest_framework import permissions
 
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-
 # 유저 전체 정보 확인
 # http://127.0.0.1:8000/user/로 접속
 router = routers.DefaultRouter()
 router.register('user', UserViewSet)
-
-schema_view = get_schema_view(
-   openapi.Info(
-      title="Snippets API",
-      default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
-)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -56,10 +40,3 @@ urlpatterns = [
     path('multichat/', include('multichat.urls')),
     path('community/', include('community.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# API 문서 swagger
-urlpatterns = [
-   url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-   url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-   url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-]
