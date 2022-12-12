@@ -34,6 +34,7 @@ class Matching_roomSerializer(serializers.ModelSerializer):
     member = serializers.PrimaryKeyRelatedField(
         many=True, queryset=User.objects.all())
     user = serializers.ReadOnlyField(source = 'user.id')
+    nickname = serializers.ReadOnlyField(source = 'user.nickname')
     # member = serializers.ReadOnlyField(source = 'user.email')
     restaurant_id = serializers.ReadOnlyField(source = 'restaurant.id')
     restaurant_name = serializers.ReadOnlyField(source = 'restaurant.name')
