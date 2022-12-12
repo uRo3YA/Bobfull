@@ -1,21 +1,21 @@
 from rest_framework import serializers
 from .models import Article, Comment, Like, ReComment
 
-# class ReCommentSerializer(serializers.ModelSerializer):
-#     user = serializers.ReadOnlyField(source="user.nickname")
-#     parent = serializers.ReadOnlyField(source="parent.pk")
-#     article = serializers.ReadOnlyField(source="article.pk")
+class ReCommentSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.nickname")
+    parent = serializers.ReadOnlyField(source="parent.pk")
+    article = serializers.ReadOnlyField(source="article.pk")
 
-#     class Meta:
-#         model = ReComment
-#         fields = [
-#             "pk",
-#             "article",
-#             "parent",
-#             "user",
-#             "content",
-#             "created_at",
-#         ]
+    class Meta:
+        model = ReComment
+        fields = [
+            "pk",
+            "article",
+            "parent",
+            "user",
+            "content",
+            "created_at",
+        ]
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source="user.nickname")
