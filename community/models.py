@@ -24,26 +24,27 @@ class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_like"
     )
 
-class ReComment(models.Model):
-    article = models.ForeignKey(
-        Article,
-        null=False,
-        blank=False,
-        on_delete=models.CASCADE,
-        related_name="recomments",
-    )
-    user = models.ForeignKey(
-        User, null=False, blank=False, on_delete=models.CASCADE
-    )
-    parent = models.ForeignKey(
-        Comment,
-        related_name="soncomments",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False,
-    )
-    created_at = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    content = models.TextField()
+# 대댓글 기능
+# class ReComment(models.Model):
+#     article = models.ForeignKey(
+#         Article,
+#         null=False,
+#         blank=False,
+#         on_delete=models.CASCADE,
+#         related_name="recomments",
+#     )
+#     user = models.ForeignKey(
+#         User, null=False, blank=False, on_delete=models.CASCADE
+#     )
+#     parent = models.ForeignKey(
+#         Comment,
+#         related_name="soncomments",
+#         on_delete=models.CASCADE,
+#         null=False,
+#         blank=False,
+#     )
+#     created_at = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+#     content = models.TextField()
 
-    def __str__(self):
-        return self.content
+#     def __str__(self):
+#         return self.content
