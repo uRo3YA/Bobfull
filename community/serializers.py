@@ -48,6 +48,8 @@ class ArticleSerializer(serializers.ModelSerializer):
             "content",
             "comments",
             "total_likes",
+            "user",
+            "created_at",
         ]
 
     def get_total_likes(self, article):
@@ -55,12 +57,12 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class LikeSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source="user.nickname")
-    comment = serializers.ReadOnlyField(source="comment.pk")
+    article = serializers.ReadOnlyField(source="article.pk")
 
     class Meta:
         model = Like
         fields = [
             "pk",
             "user",
-            "comment",
+            "article",
         ]
