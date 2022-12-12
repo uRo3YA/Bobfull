@@ -35,10 +35,11 @@ class Matching_roomSerializer(serializers.ModelSerializer):
         many=True, queryset=User.objects.all())
     user = serializers.ReadOnlyField(source = 'user.id')
     # member = serializers.ReadOnlyField(source = 'user.email')
-    restaurant = serializers.ReadOnlyField(source = 'restaurant.name')
+    restaurant_id = serializers.ReadOnlyField(source = 'restaurant.id')
+    restaurant_name = serializers.ReadOnlyField(source = 'restaurant.name')
     class Meta:
         model = Matching_room
-        fields = ('id','user','title','to_date','content','member','restaurant')
+        fields = ('id','user','title','to_date','content','member','restaurant_id','restaurant_name')
 
 class person_reviewSerializer(serializers.ModelSerializer):
     # to_member=serializers.SerializerMethodField()
