@@ -2,8 +2,10 @@
 
 > 익명 기반 식사 매칭 [BoBfull] project
 > 
-> Backdend-Domain : 
-> Frontend-Domain :
+> [Backdend-Domain](https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/) 
+>
+> [Frontend-Domain](https://master.d3n2xysrd0lvj9.amplifyapp.com/main)
+>
 > [Frontend-Repository](https://github.com/Yoonsik-Shin/bobfull_react/)
 
 ## 🔖 Table of contents
@@ -79,6 +81,7 @@
   
   
 * CI/CD
+
   <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white">
 
 ## 🔍Features
@@ -161,8 +164,6 @@
 
 
 ## Scrum Records
-
-- develop 브랜치가 존재하는 경우, develop 브랜치 스크럼 일지를 사용해주시길 바랍니다.
 
 - 스크럼 일지
   
