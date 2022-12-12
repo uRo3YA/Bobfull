@@ -46,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+        
     # class Meta:
     #     db_table = '유저정보'
 # class UserProfileImage(models.Model):
