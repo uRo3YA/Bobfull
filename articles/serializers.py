@@ -38,7 +38,7 @@ class Matching_roomSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField(source = 'restaurant.name')
     class Meta:
         model = Matching_room
-        fields = ('id','user','title', 'from_date','to_date','content','member','restaurant')
+        fields = ('id','user','title','to_date','content','member','restaurant')
 
 class person_reviewSerializer(serializers.ModelSerializer):
     # to_member=serializers.SerializerMethodField()

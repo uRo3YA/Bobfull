@@ -48,7 +48,7 @@ class Reviewimages(models.Model):
 class Matching_room(models.Model):
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    from_date = models.DateTimeField()
+    #from_date = models.DateTimeField()
     to_date = models.DateTimeField()
     content = models.TextField()
     # members = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='members')
