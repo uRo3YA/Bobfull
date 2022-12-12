@@ -17,7 +17,6 @@ from rest_framework.views import APIView
 
 
 
-@login_required
 @api_view(['GET'])
 def index(request):
     user = get_user_model().objects.get(pk=request.user.pk)
@@ -40,7 +39,6 @@ def index(request):
     return Response(new_data)
 
 
-@login_required
 @api_view(['GET'])
 def detail(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
@@ -65,7 +63,7 @@ def detail(request, room_pk):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@login_required
+
 @api_view(["POST"])
 def create(request, matchingroom_pk):
     host = get_user_model().objects.get(pk=request.user.pk)
@@ -81,8 +79,8 @@ def create(request, matchingroom_pk):
     serializer = ChatRoomSerializer(room)
     return Response(serializer.data)
 
+
 # 매칭룸에는 있으나 채팅에는 없는 유저가 채팅창에 들어오려고함, 멤버로 add하고 채팅창에 들어가기까지 구현함
-@login_required
 @api_view(['GET'])
 def join(request, matchingroom_pk):
     user = get_user_model().objects.get(pk=request.user.pk)
@@ -107,7 +105,7 @@ def join(request, matchingroom_pk):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@login_required
+
 @api_view(["DELETE"])
 def finish(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
@@ -115,7 +113,7 @@ def finish(request, room_pk):
         room.delete()
         return Response({}, status=201)
 
-# @login_required   
+#    
 # @csrf_exempt   
 # @api_view(["GET", "POST"])
 # def send(request, room_pk):

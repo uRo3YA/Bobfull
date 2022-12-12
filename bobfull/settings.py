@@ -253,8 +253,8 @@ STATIC_ROOT = 'staticfiles'
 # ]
 
 # 개발 환경과 배포 환경 미디어 파일 분리!
-# DEBUG = os.getenv("DEBUG") == "True"
-DEBUG = False
+DEBUG = os.getenv("DEBUG") == "True"
+# DEBUG = False
 if DEBUG: 
     MEDIA_URL = "/media/"
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
