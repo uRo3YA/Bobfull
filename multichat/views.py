@@ -41,11 +41,14 @@ def index(request):
 
 @api_view(['GET'])
 def detail(request, room_pk):
+    print(request.user.pk)
     room = get_object_or_404(ChatRoom, pk=room_pk)
     user = get_user_model().objects.get(pk=request.user.pk)
+    messages = Message.objects.filter(room=room).order_by('created_at')
+    serializer = MessageSerializer(messages, many=True)
     if request.user in room.users.all():
         # 메세지는 오래된 것부터 위에서부터 읽으니까...?
-        messages = Message.objects.filter(room=room).order_by('created_at')
+        # messages = Message.objects.filter(room=room).order_by('created_at')
         for m in messages:
             # 채팅창에 접속했으니까
             u = UnreadMessage.objects.get(message=m, user=user)
@@ -61,7 +64,7 @@ def detail(request, room_pk):
             m.save()
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["POST"])
