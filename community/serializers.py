@@ -39,6 +39,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
     total_likes = serializers.SerializerMethodField(read_only=True)
+    user = serializers.ReadOnlyField(source="user.nickname")
 
     class Meta:
         model = Article
