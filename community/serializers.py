@@ -21,6 +21,7 @@ class CommentSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source="user.nickname")
     userpk = serializers.ReadOnlyField(source="user.pk")
     article = serializers.ReadOnlyField(source="article.pk")
+    soncomments = ReCommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Comment
@@ -31,6 +32,7 @@ class CommentSerializer(serializers.ModelSerializer):
             "userpk",
             "content",
             "created_at",
+            "soncomments",
         ]
 
 
