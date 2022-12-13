@@ -15,6 +15,7 @@
 - [BOBfull](#BOBfull)
   - [🔖 Table of contents](#-table-of-contents)
   - [📜 General info](#-general-info)
+  - [🧭Preview](#Preview)
   - [🗃️Modeling](#️modeling)
     - [ERD모델](#erd-모델)
     - [와이어프레임](#와이어-프레임)
@@ -35,17 +36,25 @@
 
 ## 📜 General info
 
-- 메인화면 사진
-  
-  
-  개발기간 : 2022. 11. 23 - 2022. 12. 14
+- 개발기간 : 2022. 11. 23 - 2022. 12. 14
 
 - 팀원
   
   - Front-end([신윤식](https://github.com/Yoonsik-Shin/), [이용환](https://github.com/tnpfldyd/))
   - Back-end([김문경](https://github.com/kmk4162/), [이주용](https://github.com/yaonggod/), [이태극](https://github.com/uRo3YA/))
 
-## 🧭Requirements
+## 🧭Preview
+
+- 메인 화면
+	- ![메인메뉴](./assets/%EB%A9%94%EC%9D%B8%EB%A9%94%EB%89%B4.JPG)
+- 프로필 페이지
+  - ![프로필](./assets/%ED%94%84%EB%A1%9C%ED%95%84.JPG)
+
+- 룰렛
+  - ![af2ec0d6d8](./assets/af2ec0d6d8.gif)
+
+- 리뷰 작성
+  - ![6e8264aacc](./assets/6e8264aacc.gif)
 
 
 
@@ -53,11 +62,11 @@
 
 ### ERD 모델
 
-> 여기는 ERD 넣기
+> ![bobfull (1)](./assets/bobfull%20(1).png)
 
 ### 와이어 프레임
 
-> 여기는 와이어 프레임 넣기
+> ![와이어프레임](./assets/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84.JPG)
 
 ## 💻Technologies
 
@@ -97,8 +106,10 @@
 - 계정 생성 및 로그인
   - JWT인증 방식을 이용한 토큰 기반 로그인 구현
 - 구글, 카카오 소셜 로그인
-- 
-- 
+
+- 추가 설정을 통한 개인정보 수정 기능
+-  유저의 활동 내역 조회
+
 
 #### Articles APP
 
@@ -115,7 +126,7 @@
 
 #### Community APP
 
-- 
+-  
 - 
 
 #### Multichat APP
@@ -127,12 +138,8 @@
 
 #### Restaurant APP
 
-- 
-- 
-- 
-- 
-- 
-- 
+- 카카오맵을 통한 음식점 데이터 크롤링(강남, 판교)
+- 음식점 북마크 기능
 
 ### Frontend
 
