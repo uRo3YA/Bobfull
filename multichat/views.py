@@ -115,6 +115,10 @@ def leave(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
     if user in room.users.all():
         room.users.remove(user)
+        messages = Message.objects.filter(room=room)
+        for m in messages:
+            u = UnreadMessage.objects.get(message=m, user=user)
+            u.delete()
         return Response({}, status=201)
     
 @api_view(["DELETE"])
