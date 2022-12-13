@@ -61,7 +61,7 @@ def google_callback(request):
     """
     Access Token Request
     """
-    GOOGLE_CALLBACK_URI_FRONT = 'https://master.d23us6abru3x73.amplifyapp.com/accounts/google/callback/'
+    GOOGLE_CALLBACK_URI_FRONT = 'https://master.d3n2xysrd0lvj9.amplifyapp.com/accounts/google/callback/'
     token_req = requests.post(
         f"https://oauth2.googleapis.com/token?client_id={client_id}&client_secret={client_secret}&code={code}&grant_type=authorization_code&redirect_uri={GOOGLE_CALLBACK_URI_FRONT}&state={state}")
     token_req_json = token_req.json()
@@ -130,7 +130,7 @@ def kakao_login(request):
 def kakao_callback(request):
     rest_api_key = os.getenv("KAKAO_REST_API_KEY")
     code = request.GET.get("code")
-    redirect_uri = "https://master.d23us6abru3x73.amplifyapp.com/oauth/callback/kakao"
+    redirect_uri = "https://master.d3n2xysrd0lvj9.amplifyapp.com/oauth/callback/kakao"
     """
     Access Token Request
     """
