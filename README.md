@@ -2,6 +2,8 @@
 
 > 익명 기반 식사 매칭 [BoBfull] project
 > 
+> 여기에 로고 작은거 넣기
+>
 > [Backdend-Domain](https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/) 
 >
 > [Frontend-Domain](https://master.d3n2xysrd0lvj9.amplifyapp.com/main)
@@ -26,6 +28,8 @@
       - [Multichat APP](#multichat-app)
       - [Restaurant APP](#restaurant-app)
     - [Frontend](#Frontend)
+        - [???](#???)
+        - [????](#????)
   - [💬Reviews](#reviews)
   - [Scrum Records](#scrum-records)
 
@@ -49,11 +53,11 @@
 
 ### ERD 모델
 
-> 
+> 여기는 ERD 넣기
 
 ### 와이어 프레임
 
-> 
+> 여기는 와이어 프레임 넣기
 
 ## 💻Technologies
 
@@ -97,10 +101,16 @@
 
 #### Articles APP
 
-- 
-- 
-- 
-- 
+-  식당별 리뷰
+    - 식당 PK을 기준으로 짧은 리뷰 생성
+    - 별점 기능
+-  매칭룸 생성 기능
+    - 약속시간 생성
+-  매칭룸 참가 기능
+    - POST 요청으로 접속한 계정을 매칭룸 멤버에 추가
+-  매칭 후기
+    - 각 멤버 별로 매칭에 참가 한 이후 타인 유저를 평가
+    - 평가 점수에 따라 해당 유저의 매너 온도 변화
 
 #### Community APP
 
@@ -125,7 +135,13 @@
 
 ### Frontend
 
+#### ???
 
+- ????????
+
+#### ????
+
+- ???????????
 
 ## 💬Reviews
 
