@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from rest_framework.permissions import AllowAny
 from .models import ChatRoom, Message, UnreadMessage
 from django.contrib.auth.decorators import login_required
 from .forms import MessageForm
@@ -10,7 +9,7 @@ import time
 from rest_framework.response import Response
 from rest_framework import status
 from articles.models import Matching_room
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from .serializers import ChatRoomSerializer, MessageSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -19,7 +18,6 @@ from rest_framework.views import APIView
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny]) 
 def index(request):
     user = get_user_model().objects.get(pk=request.user.pk)
     # 유저가 속해있는 모든 채팅방
@@ -42,7 +40,6 @@ def index(request):
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny]) 
 def detail(request, room_pk):
     print(request.user.pk)
     room = get_object_or_404(ChatRoom, pk=room_pk)
@@ -71,7 +68,6 @@ def detail(request, room_pk):
 
 
 @api_view(["POST"])
-@permission_classes([AllowAny]) 
 def create(request, matchingroom_pk):
     host = get_user_model().objects.get(pk=request.user.pk)
     # users에는 matchingroom의 member가 와야함, create함수에 matchingroom pk를 받고 matchingroom의 member.all을 user로 설정 
@@ -89,7 +85,6 @@ def create(request, matchingroom_pk):
 
 # 매칭룸에는 있으나 채팅에는 없는 유저가 채팅창에 들어오려고함, 멤버로 add하고 채팅창에 들어가기까지 구현함
 @api_view(['GET'])
-@permission_classes([AllowAny]) 
 def join(request, matchingroom_pk):
     user = get_user_model().objects.get(pk=request.user.pk)
     matching_room = Matching_room.objects.get(pk=matchingroom_pk)
@@ -115,7 +110,6 @@ def join(request, matchingroom_pk):
     
 
 @api_view(["DELETE"])
-@permission_classes([AllowAny]) 
 def finish(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
     if room.host == get_user_model().objects.get(pk=request.user.pk):
@@ -154,7 +148,6 @@ def finish(request, room_pk):
 #     return Response(serializer.errors, status=400)
 
 class Send(APIView):
-    permission_classes = [AllowAny]
     def get(self, request, room_pk):
         room = ChatRoom.objects.get(pk=room_pk)
         messages = Message.objects.filter(room=room).order_by('-created_at')
