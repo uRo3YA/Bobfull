@@ -9,6 +9,7 @@ urlpatterns = [
     path("<int:matchingroom_pk>/create/", views.create, name='create'),
     path("<int:matchingroom_pk>/join/", views.join, name='join'),
     path("<int:room_pk>/", views.detail, name="detail"),
+    path('<int:room_pk>/leave/', views.leave, name='leave'),
     path('<int:room_pk>/finish/', views.finish, name='finish'),
 ]
 
