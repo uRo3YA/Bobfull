@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from multichat.serializers import ChatRoomSerializer
 from .models import Review,Matching_room,person_review,Reviewimages
 from accounts.models import User
 from accounts.serializers import CustomUserDetailsSerializer
@@ -38,7 +40,7 @@ class Matching_roomSerializer(serializers.ModelSerializer):
     # member = serializers.ReadOnlyField(source = 'user.email')
     restaurant_id = serializers.ReadOnlyField(source = 'restaurant.id')
     restaurant_name = serializers.ReadOnlyField(source = 'restaurant.name')
-    chatroom=serializers.ReadOnlyField(source = 'chatroom.id')
+    chatroom= ChatRoomSerializer(read_only=True)
     class Meta:
         model = Matching_room
         fields = ('id','user','title','to_date','content','member','restaurant_id','restaurant_name', 'nickname','chk_gender','chatroom')
