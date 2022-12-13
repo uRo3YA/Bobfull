@@ -107,8 +107,16 @@ def join(request, matchingroom_pk):
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
+# 채팅방 떠나기
+@api_view(["GET"])
+def leave(request, room_pk):
+    user = get_user_model().objects.get(pk=request.user.pk)
+    room = get_object_or_404(ChatRoom, pk=room_pk)
+    if user in room.users.all():
+        room.users.remove(user)
+        return Response({}, status=201)
+    
 @api_view(["DELETE"])
 def finish(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
