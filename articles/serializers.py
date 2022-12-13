@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Review,Matching_room,person_review,Reviewimages
 from accounts.models import User
-
+from accounts.serializers import CustomUserDetailsSerializer
 class ReviewImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
     
@@ -33,7 +33,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class Matching_roomSerializer(serializers.ModelSerializer):
     member = serializers.PrimaryKeyRelatedField(
         many=True, queryset=User.objects.all())
-    user = serializers.ReadOnlyField(source = 'user.id')
+    user = CustomUserDetailsSerializer(read_only=True)
     nickname = serializers.ReadOnlyField(source = 'user.nickname')
     # member = serializers.ReadOnlyField(source = 'user.email')
     restaurant_id = serializers.ReadOnlyField(source = 'restaurant.id')
@@ -41,6 +41,7 @@ class Matching_roomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Matching_room
         fields = ('id','user','title','to_date','content','member','restaurant_id','restaurant_name', 'nickname')
+        # fields ='__all__'
 
 class person_reviewSerializer(serializers.ModelSerializer):
     # to_member=serializers.SerializerMethodField()
