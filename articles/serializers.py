@@ -40,7 +40,7 @@ class Matching_roomSerializer(serializers.ModelSerializer):
     restaurant_name = serializers.ReadOnlyField(source = 'restaurant.name')
     class Meta:
         model = Matching_room
-        fields = ('id','user','title','to_date','content','member','restaurant_id','restaurant_name', 'nickname')
+        fields = ('id','user','title','to_date','content','member','restaurant_id','restaurant_name', 'nickname','chk_gender')
         # fields ='__all__'
 
 class person_reviewSerializer(serializers.ModelSerializer):

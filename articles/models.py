@@ -54,6 +54,7 @@ class Matching_room(models.Model):
     # members = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='members')
     member = models.ManyToManyField(User, symmetrical=False, related_name='members')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    chk_gender=models.BooleanField()
     # class Meta:
     #     db_table = '매칭룸'
 ## 같이 간 사람의 평가
