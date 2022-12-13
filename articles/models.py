@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import User
 from django.conf import settings
 from restaurant.models import Restaurant
+# from multichat.models import ChatRoom
 star_Choices = (
     ("⭐", "⭐"),
     ("⭐⭐", "⭐⭐"),
@@ -54,6 +55,8 @@ class Matching_room(models.Model):
     # members = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='members')
     member = models.ManyToManyField(User, symmetrical=False, related_name='members')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    chk_gender=models.BooleanField()
+    chatroom=models.ForeignKey('multichat.ChatRoom',null=True, blank=True ,on_delete=models.SET_NULL,related_name='chatroom_id')
     # class Meta:
     #     db_table = '매칭룸'
 ## 같이 간 사람의 평가

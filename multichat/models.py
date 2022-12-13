@@ -11,7 +11,7 @@ class ChatRoom(models.Model):
     host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='host_chatroom')
     # 얘는 matchingroom의 member
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_chatroom')
-    matching_room = models.ForeignKey(Matching_room, on_delete=models.CASCADE)
+    matching_room = models.ForeignKey(Matching_room, on_delete=models.CASCADE,related_name='matching_room')
     # send함수로 넣을 수 있음, create에서는 일단은 없는게 당연함
     last_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     last_message = models.TextField(null=True, blank=True)

@@ -31,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserViewSet(viewsets.ModelViewSet):
     # authentication_classes = [JWTAuthentication]
     # 관리자만 전체 유저 정보 볼 수 있게
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
