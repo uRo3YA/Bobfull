@@ -13,8 +13,8 @@ class ReviewImageSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
-    user = serializers.ReadOnlyField(source = 'user.nickname')
-    
+    user = CustomUserDetailsSerializer(read_only=True)
+
     def get_images(self, obj):
         image = obj.reviewimage.all()
         return ReviewImageSerializer(instance=image, many=True).data
