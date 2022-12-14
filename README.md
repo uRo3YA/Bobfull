@@ -201,6 +201,6 @@
 
 ## Scrum Records
 
-- 스크럼 일지
+- [스크럼 일지](./scrum)
   
   
