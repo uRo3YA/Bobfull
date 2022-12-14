@@ -1,8 +1,11 @@
+from pickletools import read_long1
 from rest_framework import serializers
+
+from accounts.serializers import CustomUserDetailsSerializer
 from .models import Article, Comment, Like, ReComment
 
 class ReCommentSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source="user.nickname")
+    user = CustomUserDetailsSerializer(read_only=True)
     parent = serializers.ReadOnlyField(source="parent.pk")
     article = serializers.ReadOnlyField(source="article.pk")
 
@@ -18,7 +21,7 @@ class ReCommentSerializer(serializers.ModelSerializer):
         ]
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source="user.nickname")
+    user = CustomUserDetailsSerializer(read_only=True)
     userpk = serializers.ReadOnlyField(source="user.pk")
     article = serializers.ReadOnlyField(source="article.pk")
     soncomments = ReCommentSerializer(many=True, read_only=True)
@@ -39,7 +42,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
     total_likes = serializers.SerializerMethodField(read_only=True)
-    user = serializers.ReadOnlyField(source="user.nickname")
+    user = CustomUserDetailsSerializer(read_only=True)
 
     class Meta:
         model = Article
