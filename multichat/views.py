@@ -107,8 +107,20 @@ def join(request, matchingroom_pk):
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
+# 채팅방 떠나기
+@api_view(["GET"])
+def leave(request, room_pk):
+    user = get_user_model().objects.get(pk=request.user.pk)
+    room = get_object_or_404(ChatRoom, pk=room_pk)
+    if user in room.users.all():
+        room.users.remove(user)
+        messages = Message.objects.filter(room=room)
+        for m in messages:
+            u = UnreadMessage.objects.get(message=m, user=user)
+            u.delete()
+        return Response({}, status=201)
+    
 @api_view(["DELETE"])
 def finish(request, room_pk):
     room = get_object_or_404(ChatRoom, pk=room_pk)
@@ -159,18 +171,19 @@ class Send(APIView):
         serializer = MessageSerializer(data=request.data)
         if serializer.is_valid():
             sender = get_user_model().objects.get(pk=request.user.pk)
-            room.last_user = sender
-            room.last_message = serializer.validated_data['content']
-            room.save()
-            message = serializer.save(sender_id=request.user.pk, room_id=room_pk)
-            for member in room.users.all():
-                # 모든 user에 대해 메세지 안읽음 데이터 만들고
-                UnreadMessage.objects.create(message=message, user=member)
-            # 메세지 보낸 사람만 메세지 읽음 처리
-            u = UnreadMessage.objects.get(message=message, user=sender)
-            u.read = True
-            u.save()
-            unread = UnreadMessage.objects.filter(message=message, read=False).count()
-            serializer.save(unread=unread)
-            return Response(serializer.data, status=201)
+            if sender in room.users.all():
+                room.last_user = sender
+                room.last_message = serializer.validated_data['content']
+                room.save()
+                message = serializer.save(sender_id=request.user.pk, room_id=room_pk)
+                for member in room.users.all():
+                    # 모든 user에 대해 메세지 안읽음 데이터 만들고
+                    UnreadMessage.objects.create(message=message, user=member)
+                # 메세지 보낸 사람만 메세지 읽음 처리
+                u = UnreadMessage.objects.get(message=message, user=sender)
+                u.read = True
+                u.save()
+                unread = UnreadMessage.objects.filter(message=message, read=False).count()
+                serializer.save(unread=unread)
+                return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)

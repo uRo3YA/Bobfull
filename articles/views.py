@@ -58,12 +58,26 @@ class add_memberView(APIView): # 좋아요와 비슷한 로직. 토글 형식.
          
         room = get_object_or_404(Matching_room, id=pk)
         me = request.user
-        if me in room.member.all(): #
-            room.member.remove(me) # (request.user)
-            return Response("매칭을 취소했습니다.", status=status.HTTP_200_OK)
-        else:
-            room.member.add(me) # 너의 룸에 나를 더해라
-            return Response("매칭을 참가했습니다.", status=status.HTTP_200_OK)
+        # print("room.chk_gender:",room.chk_gender)
+        # print("room.user.gender:",room.user.gender)
+        # print("me.gender:",room.user.gender)
+        if room.chk_gender:
+            if room.user.gender==me.gender:
+                if me in room.member.all(): #
+                    room.member.remove(me) # (request.user)
+                    return Response("매칭을 취소했습니다.", status=status.HTTP_200_OK)
+                else:
+                    room.member.add(me) # 너의 룸에 나를 더해라
+                    return Response("매칭을 참가했습니다.", status=status.HTTP_200_OK)
+            else:
+                return Response("조건을 만족하지 않아 참여 할 수 없습니다.", status=status.HTTP_200_OK)
+        else:    
+            if me in room.member.all(): #
+                    room.member.remove(me) # (request.user)
+                    return Response("매칭을 취소했습니다.", status=status.HTTP_200_OK)
+            else:
+                    room.member.add(me) # 너의 룸에 나를 더해라
+                    return Response("매칭을 참가했습니다.", status=status.HTTP_200_OK)
 
 
 class person_reviewViewSet(viewsets.ModelViewSet):
