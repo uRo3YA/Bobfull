@@ -89,7 +89,7 @@ def join(request, matchingroom_pk):
     user = get_user_model().objects.get(pk=request.user.pk)
     matching_room = Matching_room.objects.get(pk=matchingroom_pk)
     room = ChatRoom.objects.get(matching_room=matching_room)
-    if user not in room.users.all():
+    if user in matching_room.member.all() and user not in room.users.all():
         room.users.add(user)
         room.save()
         # 메세지는 오래된 것부터 위에서부터 읽으니까...?
