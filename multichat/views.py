@@ -106,7 +106,7 @@ def join(request, matchingroom_pk):
             m.save()
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 # 채팅방 떠나기
 @api_view(["GET"])
