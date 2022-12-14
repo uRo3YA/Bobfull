@@ -1,8 +1,11 @@
+from pickletools import read_long1
 from rest_framework import serializers
+
+from accounts.serializers import CustomUserDetailsSerializer
 from .models import Article, Comment, Like, ReComment
 
 class ReCommentSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source="user.nickname")
+    user = CustomUserDetailsSerializer(read_only=True)
     parent = serializers.ReadOnlyField(source="parent.pk")
     article = serializers.ReadOnlyField(source="article.pk")
 
