@@ -150,8 +150,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
-    'https://master.d23us6abru3x73.amplifyapp.com',  # 계정정지 
     'https://master.d3n2xysrd0lvj9.amplifyapp.com',  # 예비분
+    'https://bobfull.s3.ap-northeast-2.amazonaws.com',
 ]
 CORS_ALLOW_CREDENTIALS = False
 
