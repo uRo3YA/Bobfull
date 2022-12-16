@@ -1,9 +1,7 @@
 # BOBfull
 
-> 익명 기반 식사 매칭 [BoBfull] project
+> 익명 기반 식사 매칭 [BoBfull] project![bobfull](README.assets/bobfull.png)
 > 
-> 여기에 로고 작은거 넣기
->
 > [Backdend-Domain](https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/) 
 >
 > [Frontend-Domain](https://master.d3n2xysrd0lvj9.amplifyapp.com/main)
@@ -146,13 +144,16 @@
 
 ### Frontend
 
-#### ???
+#### React
 
-- ????????
+- API 요청 및 화면구성
+- Geolocation API를 통한 현재 위치와 음식점 간의 위치 계산
+- React-query를 활용한 최신 DB내용 상태 관리
+- PWA를 이용한 웹 앱 기능 활용
 
-#### ????
+#### Redux
 
-- ???????????
+- JWT 토큰 로그인 후 유저의 상태관리
 
 ## 💬Reviews
 
@@ -191,7 +192,7 @@
   
 - 이태극
   
-  - 4주라는 짧다면 짧고 길다면 긴 프로젝트를 끝마쳤습니다. 
+  - 3주라는 짧다면 짧고 길다면 긴 프로젝트를 끝마쳤습니다. 
   - 모든 팀원이 DRF, React라는 새로운 기술스택을 적용해보고, 개발하는 과정이 어려웠습니다.
      하지만, 여러문서를 참조하며 기능 개발을 하는 과정은 재미있었습니다.
   - 프론트와 백 서로 따로 배포를 하여 백서버와 프론트 서버를 연결시키는 것을 경험하여 좋았습니다.
