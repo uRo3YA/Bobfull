@@ -1,0 +1,96 @@
+.res-img-div {
+  background: rgb(241, 241, 241);
+}
+
+.res-menu {
+  margin-bottom: 20px;
+}
+
+.res-title {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-top: 20px;
+}
+
+.res-chat-button {
+  color: white;
+  background-color: lightsalmon;
+  border-color: lightsalmon;
+  border-radius: 5px;
+  margin-left: 5px;
+  height: 35px;
+  border: 0;
+  outline: 0;
+}
+
+.res-chat-button a {
+  text-decoration: none;
+  color: white;
+}
+
+.res-date {
+  color: gray;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.review-span {
+  font-size: 12px;
+  color: gray;
+}
+
+.review-p {
+  margin-bottom: 15px;
+  font-size: x-large;
+  line-height: 150%;
+}
+
+.res-detail-img {
+  height: 300px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.slick-arrow {
+  display: none !important;
+}
+
+.container {
+  padding-bottom: 120px;
+}
+
+.res-detail-span-p {
+  font-size: large;
+}
+
+.res-detail-review-create {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.res-detail-review-create h3 {
+  padding-top: 10px;
+}
+
+.review-close-btn {
+  width: 100%;
+}
+
+.review-card {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.res-profile-img {
+  margin-right: 5px;
+  border-radius: 50%;
+  width: 20px;
+}
+
+.review-title {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}

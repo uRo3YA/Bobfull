@@ -1,0 +1,57 @@
+.res-one {
+  margin: 20px 0;
+}
+
+.res-img {
+  width: 50%;
+  height: 25vh;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.res-img-wrapper {
+  display: flex;
+  overflow: hidden;
+}
+
+.res-detail {
+  display: flex;
+}
+
+.res-index-name {
+  text-decoration: none;
+  color: black;
+}
+
+.res-index-h3 {
+  margin: 10px 0;
+  font-weight: 1000px;
+}
+
+.searchForm {
+  margin-top: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.searchForm input {
+  border-width: 0.25px;
+  height: 35px;
+  border-radius: 5px;
+  padding-left: 10px;
+  width: 65vw;
+}
+
+.searchBtn {
+  width: 55px;
+  color: white;
+  background-color: lightsalmon;
+  border-color: lightsalmon;
+  border-radius: 5px;
+  margin-left: 5px;
+  height: 35px;
+  border: 0;
+  outline: 0;
+}

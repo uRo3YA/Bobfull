@@ -1,0 +1,83 @@
+.matching-titles {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin: 10px 5px;
+}
+
+.matchingBtn {
+  --bs-btn-bg: lightsalmon;
+  --bs-btn-border-color: lightsalmon;
+  --bs-btn-active-bg: lightsalmon;
+  --bs-btn-active-border-color: lightsalmon;
+  --bs-btn-hover-bg: lightsalmon;
+  --bs-btn-hover-border-color: lightsalmon;
+  border-radius: 10px;
+  color: white;
+}
+
+.matchingLink {
+  text-decoration: none;
+  color: lightsalmon;
+}
+
+.matching-container {
+  padding-bottom: 10px;
+}
+
+.matching-create-btn {
+  background-color: lightsalmon;
+  border-color: lightsalmon;
+  border-radius: 5px;
+  color: white;
+  border: 0;
+  outline: 0;
+  height: 35px;
+  width: 100%;
+}
+
+.form-btn-position {
+  position: fixed;
+  z-index: 5;
+  right: 3%;
+  bottom: 10%;
+}
+
+.bga-black {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 8;
+}
+
+.bg-white {
+  background: white;
+  border-radius: 15px;
+  padding: 5px;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.matching-detail-btn {
+  background-color: lightsalmon;
+  border-color: lightsalmon;
+  border-radius: 5px;
+  color: white;
+  border: 0;
+  outline: 0;
+  height: 35px;
+  width: 100%;
+}
+
+.matching-detail-link {
+  text-decoration: none;
+  color: white;
+}
+
+.matching-detail-btn-tt {
+  color: lightsalmon;
+  text-decoration: none;
+}
