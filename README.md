@@ -27,8 +27,8 @@
       - [Multichat APP](#multichat-app)
       - [Restaurant APP](#restaurant-app)
     - [Frontend](#Frontend)
-        - [???](#???)
-        - [????](#????)
+        - [React](#React)
+        - [Redux](#Redux)
   - [💬Reviews](#reviews)
   - [Scrum Records](#scrum-records)
 
