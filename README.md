@@ -1,8 +1,10 @@
 # BOBfull
 
-> 익명 기반 식사 매칭 [BoBfull] project![bobfull](README.assets/bobfull.png)
+> 익명 기반 식사 매칭 [BoBfull] project![bobfull](assets/bobfull (2).png)
 > 
 > [Backdend-Domain](https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/) 
+>
+> [Backend-Repository](https://github.com/kmk4162/bobfull)
 >
 > [Frontend-Domain](https://master.d3n2xysrd0lvj9.amplifyapp.com/main)
 >
