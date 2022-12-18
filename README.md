@@ -1,6 +1,6 @@
 # BOBfull
 
-> 익명 기반 식사 매칭 [BoBfull] project![bobfull](assets/bobfull (2).png)
+> 익명 기반 식사 매칭 [BoBfull] project![bobfull](./assets/bobfull%20(2).png)
 > 
 > [Backdend-Domain](https://bobfullbean-env.eba-mxtkhmg5.ap-northeast-2.elasticbeanstalk.com/) 
 >
